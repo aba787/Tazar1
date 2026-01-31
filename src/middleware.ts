@@ -1,14 +1,21 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return supabaseResponse;
+  }
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -33,22 +40,20 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protected routes
   const protectedPaths = ['/overview', '/group-buying', '/capacity-exchange', '/settings'];
   const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  // Auth routes (redirect if already logged in)
   const authPaths = ['/login', '/register', '/forgot-password'];
   const isAuthPath = authPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  // Onboarding route (requires auth but not factory)
   const isOnboardingPath = request.nextUrl.pathname.startsWith('/onboarding');
 
-  // Redirect to login if accessing protected routes without auth
+  const isAdminPath = request.nextUrl.pathname.startsWith('/admin');
+
   if (isProtectedPath && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
@@ -56,7 +61,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Redirect to login if accessing onboarding without auth
   if (isOnboardingPath && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
@@ -64,7 +68,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Redirect authenticated users away from auth pages
+  if (isAdminPath && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('error', 'unauthorized');
+    return NextResponse.redirect(url);
+  }
+
   if (isAuthPath && user) {
     const url = request.nextUrl.clone();
     url.pathname = '/overview';
