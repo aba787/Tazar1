@@ -27,13 +27,13 @@ const statusLabels: Record<string, string> = {
   cancelled: 'ملغى',
 };
 
-const statusColors: Record<string, 'default' | 'success' | 'warning' | 'error' | 'info'> = {
+const statusColors: Record<string, 'default' | 'success' | 'warning' | 'destructive' | 'info'> = {
   pending: 'warning',
   processing: 'info',
   paid: 'success',
-  failed: 'error',
+  failed: 'destructive',
   refunded: 'default',
-  cancelled: 'error',
+  cancelled: 'destructive',
 };
 
 export default function AdminTransactionsPage() {

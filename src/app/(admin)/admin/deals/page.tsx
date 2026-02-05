@@ -35,11 +35,11 @@ const statusLabels: Record<string, string> = {
   cancelled: 'ملغية',
 };
 
-const statusColors: Record<string, 'default' | 'success' | 'warning' | 'error' | 'info'> = {
+const statusColors: Record<string, 'default' | 'success' | 'warning' | 'destructive' | 'info'> = {
   draft: 'default',
   open: 'info',
   aggregating: 'warning',
-  cancelled: 'error',
+  cancelled: 'destructive',
   completed: 'success',
 };
 

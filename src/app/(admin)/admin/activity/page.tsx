@@ -143,7 +143,7 @@ export default async function AdminActivityPage() {
                       <Badge variant={
                         activity.status === 'verified' || activity.status === 'completed' ? 'success' :
                         activity.status === 'submitted' || activity.status === 'pending' ? 'warning' :
-                        activity.status === 'cancelled' || activity.status === 'rejected' ? 'error' :
+                        activity.status === 'cancelled' || activity.status === 'rejected' ? 'destructive' :
                         'default'
                       } className="text-xs">
                         {activity.status}
