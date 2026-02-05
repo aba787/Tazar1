@@ -16,14 +16,18 @@ import {
   ChevronLeft,
   Moon,
   Sun,
+  Activity,
+  CreditCard,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { signOut } from '@/lib/actions/auth';
 
 const menuItems = [
   { href: '/admin', label: 'لوحة التحكم', icon: LayoutDashboard },
+  { href: '/admin/activity', label: 'النشاط المباشر', icon: Activity },
   { href: '/admin/factories', label: 'المصانع', icon: Factory },
   { href: '/admin/deals', label: 'الصفقات', icon: ShoppingCart },
+  { href: '/admin/transactions', label: 'المعاملات', icon: CreditCard },
   { href: '/admin/equipment', label: 'المعدات', icon: Wrench },
   { href: '/admin/users', label: 'المستخدمين', icon: Users },
   { href: '/admin/documents', label: 'الوثائق', icon: FileText },

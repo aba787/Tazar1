@@ -4,6 +4,19 @@
 Takamul (تكامل) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2025-02-05**: Production-ready security and admin dashboard
+  - Comprehensive RLS policies with admin bypass (migration 006)
+  - Fixed incorrect RLS policies that compared auth.uid() with factory_id
+  - Helper functions: get_user_factory_id(), is_admin_user(), user_owns_factory()
+  - Transactions table for payment readiness (pending, paid, failed, refunded)
+  - Admin dashboard enhancements:
+    - Live activity feed with real-time monitoring
+    - Deal management with stop/cancel functionality
+    - Transaction management page
+    - Complete audit logging
+  - Server Actions using real database queries with proper authorization
+  - Performance indexes for heavy tables
+
 - **2025-01-31**: Major security and stability improvements
   - Removed hardcoded admin emails, implemented database-driven role-based access control
   - Added rate limiting to authentication flows (login, signup, password reset)
@@ -56,10 +69,12 @@ Takamul (تكامل) is an industrial synergy platform connecting Saudi SME fact
 
 ### Security Features
 - Database-driven role-based access control (RBAC)
+- Strict RLS policies with admin bypass on all tables
 - Rate limiting on authentication endpoints
 - Input validation and sanitization
-- Row Level Security (RLS) in Supabase
+- Factory ownership verification on all mutations
 - Environment variable validation
+- Transactions verified server-side only (never trust frontend for payments)
 
 ## Configuration
 
@@ -78,6 +93,7 @@ Run migrations in order:
 3. `003_factory_onboarding.sql` - Onboarding flow
 4. `004_admin_system.sql` - Admin logs and settings
 5. `005_user_roles.sql` - Role-based access control
+6. `006_strict_rls_and_transactions.sql` - Strict RLS policies and transactions table
 
 ### First Admin Setup
 After running migrations, manually insert an admin role:
