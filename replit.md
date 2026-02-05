@@ -15,6 +15,7 @@ Takamul (تكامل) is an industrial synergy platform connecting Saudi SME fact
     - Transaction management page
     - Complete audit logging
   - Server Actions using real database queries with proper authorization
+  - All admin read functions now have isAdmin() authorization checks
   - Performance indexes for heavy tables
 
 - **2025-01-31**: Major security and stability improvements
