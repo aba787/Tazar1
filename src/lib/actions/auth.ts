@@ -9,6 +9,7 @@ export interface AuthResult {
   success: boolean;
   error?: string;
   message?: string;
+  isAdmin?: boolean;
 }
 
 function sanitizeEmail(email: string): string {
@@ -128,8 +129,17 @@ export async function signIn(formData: FormData): Promise<AuthResult> {
   }
 
   resetRateLimit(`signin:${sanitizedEmail}`);
+
+  const { data: roleData } = await supabase
+    .from('user_roles')
+    .select('role')
+    .eq('user_id', (await supabase.auth.getUser()).data.user?.id || '')
+    .eq('is_active', true)
+    .in('role', ['admin', 'super_admin'])
+    .maybeSingle();
+
   revalidatePath('/', 'layout');
-  return { success: true };
+  return { success: true, isAdmin: !!roleData };
 }
 
 export async function signOut(): Promise<void> {

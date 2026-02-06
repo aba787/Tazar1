@@ -27,7 +27,7 @@ function LoginForm() {
     const result = await signIn(formData);
 
     if (result.success) {
-      router.push(redirect);
+      router.push(result.isAdmin ? '/admin' : redirect);
       router.refresh();
     } else {
       setFormError(result.error || 'حدث خطأ غير متوقع');
