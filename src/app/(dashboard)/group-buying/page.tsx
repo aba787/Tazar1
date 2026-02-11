@@ -16,12 +16,15 @@ import {
   BarChart3,
   Gavel,
   Layers,
+  X,
+  CheckCircle,
 } from 'lucide-react';
 import {
   Card,
   CardContent,
   Button,
   Input,
+  Badge,
 } from '@/components/ui';
 import { SmartAggregator, JoinDealModal } from '@/components/features';
 import { cn } from '@/lib/utils';
@@ -410,10 +413,12 @@ export default function GroupBuyingPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [selectedDeal, setSelectedDeal] = useState<ProcurementDeal | null>(null);
   const [showJoinModal, setShowJoinModal] = useState(false);
+  const [viewingDeal, setViewingDeal] = useState<ProcurementDeal | null>(null);
+  const [deals, setDeals] = useState<ProcurementDeal[]>(mockDeals);
 
   // Filter deals
   const filteredDeals = useMemo(() => {
-    return mockDeals.filter(deal => {
+    return deals.filter(deal => {
       const matchesSearch =
         deal.title.includes(searchQuery) ||
         deal.description?.includes(searchQuery) ||
@@ -447,8 +452,20 @@ export default function GroupBuyingPage() {
   };
 
   const handleSubmitJoin = async (data: unknown) => {
-    console.log('Join deal:', selectedDeal?.id, data);
-    // In production, call server action here
+    if (selectedDeal) {
+      setDeals(prev => prev.map(d => {
+        if (d.id === selectedDeal.id) {
+          const joinData = data as { quantity?: number };
+          const addedQty = joinData?.quantity || selectedDeal.minQuantity || 10;
+          return {
+            ...d,
+            currentQuantity: d.currentQuantity + addedQty,
+            participantCount: d.participantCount + 1,
+          };
+        }
+        return d;
+      }));
+    }
     setShowJoinModal(false);
     setSelectedDeal(null);
   };
@@ -465,7 +482,7 @@ export default function GroupBuyingPage() {
         </div>
         <Button>
           <Plus className="ml-2 h-5 w-5" />
-          إنشاء صفقة جديدة
+          اقتراح إضافة صفقة
         </Button>
       </div>
 
@@ -578,7 +595,7 @@ export default function GroupBuyingPage() {
               key={deal.id}
               deal={deal}
               onJoin={() => handleJoinDeal(deal)}
-              onViewDetails={() => console.log('View details:', deal.id)}
+              onViewDetails={() => setViewingDeal(deal)}
             />
           ))}
         </AnimatePresence>
@@ -594,10 +611,146 @@ export default function GroupBuyingPage() {
           </p>
           <Button className="mt-4">
             <Plus className="ml-2 h-4 w-4" />
-            إنشاء صفقة جديدة
+            اقتراح إضافة صفقة
           </Button>
         </Card>
       )}
+
+      {/* Deal Detail Slide-Over */}
+      <AnimatePresence>
+        {viewingDeal && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setViewingDeal(null)}
+            />
+            <motion.div
+              className="fixed inset-y-0 left-0 z-50 w-full max-w-lg bg-white dark:bg-gray-900 shadow-2xl overflow-y-auto"
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            >
+              <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                <h2 className="text-lg font-bold">تفاصيل الصفقة</h2>
+                <button
+                  onClick={() => setViewingDeal(null)}
+                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge variant={viewingDeal.status === 'active' ? 'success' : 'warning'}>
+                      {viewingDeal.status === 'active' ? 'نشط' : viewingDeal.status}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{viewingDeal.category}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground">{viewingDeal.title}</h3>
+                  <p className="text-muted-foreground mt-2">{viewingDeal.description}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                    <p className="text-xs text-muted-foreground mb-1">الكمية الحالية</p>
+                    <p className="text-lg font-bold">{viewingDeal.currentQuantity.toLocaleString('ar-SA')} {viewingDeal.unit}</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                    <p className="text-xs text-muted-foreground mb-1">الكمية المستهدفة</p>
+                    <p className="text-lg font-bold">{viewingDeal.targetQuantity.toLocaleString('ar-SA')} {viewingDeal.unit}</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                    <p className="text-xs text-muted-foreground mb-1">المشاركون</p>
+                    <p className="text-lg font-bold">{viewingDeal.participantCount} مصنع</p>
+                  </div>
+                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                    <p className="text-xs text-muted-foreground mb-1">سعر السوق</p>
+                    <p className="text-lg font-bold">{viewingDeal.marketPricePerUnit > 0 ? formatCurrency(viewingDeal.marketPricePerUnit) : 'غير متوفر'}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-3">شرائح الأسعار</h4>
+                  <div className="space-y-2">
+                    {viewingDeal.pricingTiers.map((tier) => {
+                      const isCurrentTier = viewingDeal.currentQuantity >= tier.minQuantity &&
+                        (tier.maxQuantity === null || viewingDeal.currentQuantity <= tier.maxQuantity);
+                      return (
+                        <div
+                          key={tier.tierIndex}
+                          className={cn(
+                            'flex items-center justify-between p-3 rounded-xl border transition-all',
+                            isCurrentTier
+                              ? 'border-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 dark:border-emerald-700'
+                              : 'border-gray-200 dark:border-gray-700'
+                          )}
+                        >
+                          <div className="flex items-center gap-2">
+                            {isCurrentTier && <CheckCircle className="h-4 w-4 text-emerald-500" />}
+                            <span className="font-medium text-sm">{tier.tierLabel}</span>
+                          </div>
+                          <div className="text-left">
+                            <span className="font-bold">{formatCurrency(tier.pricePerUnit)}</span>
+                            <span className="text-xs text-muted-foreground mr-1">/{viewingDeal.unit}</span>
+                            {tier.discountPercentage > 0 && (
+                              <span className="text-xs text-emerald-600 mr-2">-{tier.discountPercentage}%</span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-2">التقدم</h4>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                    <div
+                      className="bg-emerald-500 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${Math.min(100, (viewingDeal.currentQuantity / viewingDeal.targetQuantity) * 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {Math.round((viewingDeal.currentQuantity / viewingDeal.targetQuantity) * 100)}% من الهدف
+                  </p>
+                </div>
+
+                {viewingDeal.tags && viewingDeal.tags.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2">الوسوم</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {viewingDeal.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">{tag}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                  <Button
+                    className="flex-1"
+                    onClick={() => {
+                      setViewingDeal(null);
+                      handleJoinDeal(viewingDeal);
+                    }}
+                  >
+                    الانضمام للصفقة
+                  </Button>
+                  <Button variant="outline" onClick={() => setViewingDeal(null)}>
+                    إغلاق
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Join Deal Modal */}
       {selectedDeal && (

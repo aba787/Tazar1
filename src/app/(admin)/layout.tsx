@@ -3,8 +3,8 @@ import { isAdmin } from '@/lib/actions/admin';
 import AdminSidebar from './components/AdminSidebar';
 
 export const metadata = {
-  title: 'لوحة الإدارة | تكامل',
-  description: 'لوحة إدارة منصة تكامل الصناعية',
+  title: 'لوحة الإدارة | تآزر',
+  description: 'لوحة إدارة منصة تآزر الصناعية',
 };
 
 export default async function AdminLayout({

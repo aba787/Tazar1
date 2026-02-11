@@ -79,7 +79,7 @@ export default function RegisterPage() {
         </div>
 
         <div className="relative z-10 max-w-lg">
-          <h2 className="text-4xl font-bold mb-6">انضم لمنصة التكامل</h2>
+          <h2 className="text-4xl font-bold mb-6">انضم لمنصة تآزر</h2>
           <p className="text-xl text-white/90 mb-8">
             سجّل مصنعك الآن واستفد من قوة الشراء الجماعي وتبادل الطاقة الإنتاجية
           </p>

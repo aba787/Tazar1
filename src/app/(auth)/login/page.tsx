@@ -50,7 +50,7 @@ function LoginForm() {
               <Factory className="h-8 w-8" />
             </div>
             <h1 className="text-2xl font-bold">مرحباً بعودتك</h1>
-            <p className="text-muted-foreground mt-2">سجّل دخولك للوصول لمنصة التكامل</p>
+            <p className="text-muted-foreground mt-2">سجّل دخولك للوصول لمنصة تآزر</p>
           </div>
 
           {/* Error Alert */}
@@ -151,7 +151,7 @@ function LoginForm() {
         </div>
 
         <div className="relative z-10 max-w-lg text-center">
-          <h2 className="text-4xl font-bold mb-6">منصة التكامل الصناعي</h2>
+          <h2 className="text-4xl font-bold mb-6">منصة تآزر الصناعية</h2>
           <p className="text-xl text-white/90 mb-8">
             اجمع قوتك الشرائية مع مصانع أخرى ووفّر حتى 30% على المواد الخام
           </p>

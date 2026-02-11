@@ -372,7 +372,7 @@ export default function LandingPage() {
               <ul className="space-y-3 mb-8">
                 {[
                   'كل مزايا الخطة الاحترافية',
-                  'API للتكامل مع أنظمتك',
+                  'API للربط مع أنظمتك',
                   'مدير حساب مخصص',
                   'تدريب وإعداد مخصص',
                 ].map((feature, i) => (
@@ -433,7 +433,7 @@ export default function LandingPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
             {/* Logo & Description */}
             <div className="sm:col-span-2 lg:col-span-1">
-              <h3 className="text-xl font-bold mb-4">تكامل</h3>
+              <h3 className="text-xl font-bold mb-4">تآزر</h3>
               <p className="text-background/70 leading-relaxed">
                 منصة سعودية تربط المصانع الصغيرة والمتوسطة للشراء الجماعي وتبادل الطاقة الإنتاجية
               </p>
@@ -470,7 +470,7 @@ export default function LandingPage() {
           </div>
 
           <div className="pt-8 border-t border-background/20 text-center text-background/60">
-            <p>© 2025 منصة تكامل. جميع الحقوق محفوظة.</p>
+            <p>© 2025 منصة تآزر. جميع الحقوق محفوظة.</p>
           </div>
         </div>
       </footer>

@@ -1,9 +1,20 @@
-# Takamul Industrial Platform
+# Ta'azur Industrial Platform (تآزر)
 
 ## Overview
-Takamul (تكامل) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
+Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2026-02-11**: Complete bug fix pass before launch
+  - Rebranded all UI from "تكامل" (Takamul) to "تآزر" (Ta'azur) across entire codebase
+  - Updated button labels: "إنشاء طلب" → "إنشاء طلب خاص", "إنشاء صفقة" → "اقتراح إضافة صفقة"
+  - Fixed logout: proper session termination via Supabase signOut, redirect to /login
+  - Notifications system: real-time counter, dropdown menu, mark-as-read, notification types
+  - Order tracking page (/orders): status filtering, type filtering, stats cards
+  - Deal detail view: slide-over panel with pricing tiers, progress, join CTA
+  - Real-time deal card updates: state management via React state, cards update after joining
+  - Capacity exchange button: "أضف قدراتك الإنتاجية" now opens add-capacity modal
+  - Market prices: displayed with fallback handling on dashboard overview
+
 - **2025-02-05**: Production-ready security and admin dashboard
   - Comprehensive RLS policies with admin bypass (migration 006)
   - Fixed incorrect RLS policies that compared auth.uid() with factory_id
@@ -36,88 +47,54 @@ Takamul (تكامل) is an industrial synergy platform connecting Saudi SME fact
 │   │   ├── (auth)/            # Authentication pages (login, register, forgot-password)
 │   │   ├── (admin)/           # Admin dashboard (protected)
 │   │   ├── (dashboard)/       # User dashboard (protected)
+│   │   │   ├── overview/      # Dashboard overview with market prices
+│   │   │   ├── group-buying/  # Group buying with deal cards, detail view, join modal
+│   │   │   ├── capacity-exchange/ # Capacity exchange with RFQ and add capacity
+│   │   │   ├── orders/        # Order tracking with filtering
+│   │   │   └── settings/      # User settings
 │   │   ├── (marketing)/       # Landing page
 │   │   ├── (onboarding)/      # Factory onboarding flow
 │   │   └── api/               # API routes
 │   ├── components/
-│   │   ├── ui/                # Base UI components (Button, Input, Card, etc.)
-│   │   ├── features/          # Feature-specific components
+│   │   ├── ui/                # Base UI components (Button, Input, Card, Badge, etc.)
+│   │   ├── features/          # Feature-specific components (JoinDealModal, RFQModal, etc.)
 │   │   ├── layouts/           # Layout components (Header, Sidebar)
 │   │   └── providers/         # Context providers (Theme)
 │   ├── lib/
 │   │   ├── supabase/          # Supabase client configuration
 │   │   ├── actions/           # Server actions (auth, admin, procurement, onboarding)
 │   │   ├── config/            # Environment configuration
-│   │   └── utils/             # Utility functions
-│   ├── hooks/                 # Custom React hooks
-│   ├── stores/                # Zustand stores (if any)
+│   │   ├── rate-limit.ts      # Rate limiting utility
+│   │   └── utils.ts           # Shared utilities (cn, formatCurrency, formatNumber)
 │   └── types/                 # TypeScript type definitions
 ├── supabase/
-│   ├── schema.sql             # Main database schema
-│   └── migrations/            # Database migrations
-├── public/                    # Static assets
-└── .env.example               # Environment variables template
+│   └── migrations/            # Database migrations (001-006)
+└── public/                    # Static assets
 ```
 
-### Key Technologies
-- **Framework**: Next.js 16 with App Router
-- **UI**: React 19, Tailwind CSS 4, Framer Motion
-- **Database**: Supabase (PostgreSQL)
-- **Auth**: Supabase Auth with SSR cookies
-- **Form Handling**: React Hook Form + Zod
-- **State**: Zustand (optional)
-- **Language**: Arabic (RTL) primary
+### Design System
+- Liquid Glass design with neutral color palette
+- Arabic RTL support with Cairo/Tajawal fonts
+- Dark mode support via next-themes
+- Framer Motion animations
+- Tailwind CSS v4
 
-### Security Features
-- Database-driven role-based access control (RBAC)
-- Strict RLS policies with admin bypass on all tables
-- Rate limiting on authentication endpoints
-- Input validation and sanitization
-- Factory ownership verification on all mutations
-- Environment variable validation
-- Transactions verified server-side only (never trust frontend for payments)
+### Key Components
+- **Header**: Notifications dropdown, user menu with logout, breadcrumb navigation
+- **Sidebar**: Navigation with liquid glass styling, collapsible
+- **ProcurementDealCard**: Deal cards with pricing tiers, progress bar, join/view actions
+- **JoinDealModal**: Multi-step modal (quantity, delivery, commitment, review)
+- **RFQModal**: Request for quote modal for capacity exchange
+- **SmartAggregator**: AI-powered deal suggestions
 
-## Configuration
+### Authentication
+- Supabase Auth with email/password
+- Server-side session management
+- Role-based access control (admin, super_admin)
+- Rate limiting on auth endpoints
+- Protected routes via middleware
 
-### Environment Variables
-Copy `.env.example` to `.env.local` and fill in:
-```
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_APP_URL=http://localhost:5000
-```
-
-### Database Setup
-Run migrations in order:
-1. `schema.sql` - Base tables
-2. `002_strategic_procurement.sql` - Procurement features
-3. `003_factory_onboarding.sql` - Onboarding flow
-4. `004_admin_system.sql` - Admin logs and settings
-5. `005_user_roles.sql` - Role-based access control
-6. `006_strict_rls_and_transactions.sql` - Strict RLS policies and transactions table
-
-### First Admin Setup
-After running migrations, manually insert an admin role:
-```sql
-INSERT INTO user_roles (user_id, role, is_active)
-VALUES ('your-user-uuid', 'super_admin', true);
-```
-
-## Development
-
-### Commands
-- `npm run dev` - Start development server on port 5000
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
-
-### Coding Conventions
-- Use Arabic for user-facing strings
-- Follow existing component patterns
-- Use server actions for data mutations
-- Always validate user input with Zod
-- Never expose internal error messages to users
-
-## User Preferences
-- RTL layout (Arabic primary language)
-- Dark/Light theme support via next-themes
-- Clean, professional design aesthetic
+### Brand Identity
+- Name: تآزر (Ta'azur)
+- Platform descriptor: منصة تآزر الصناعية
+- Color: Emerald/green primary with neutral palette

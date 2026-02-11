@@ -115,7 +115,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             </div>
             {/* Logo Text */}
             <div>
-              <h1 className="text-lg font-bold text-foreground">تكامل</h1>
+              <h1 className="text-lg font-bold text-foreground">تآزر</h1>
               <p className="text-xs text-muted-foreground">منصة المصانع</p>
             </div>
           </Link>

@@ -24,7 +24,7 @@ export default async function AdminDashboardPage() {
           لوحة التحكم
         </h1>
         <p className="text-gray-500 dark:text-gray-400">
-          مرحباً بك في لوحة إدارة منصة تكامل
+          مرحباً بك في لوحة إدارة منصة تآزر
         </p>
       </div>
 

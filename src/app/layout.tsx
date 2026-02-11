@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
-    default: "منصة التكامل الصناعي",
-    template: "%s | منصة التكامل الصناعي",
+    default: "منصة تآزر الصناعية",
+    template: "%s | منصة تآزر الصناعية",
   },
   description: "منصة تربط المصانع السعودية الصغيرة والمتوسطة للشراء الجماعي وتبادل الطاقة الإنتاجية",
   keywords: [
@@ -18,18 +18,18 @@ export const metadata: Metadata = {
     "معادن",
     "B2B",
   ],
-  authors: [{ name: "منصة التكامل الصناعي" }],
-  creator: "منصة التكامل الصناعي",
+  authors: [{ name: "منصة تآزر الصناعية" }],
+  creator: "منصة تآزر الصناعية",
   openGraph: {
     type: "website",
     locale: "ar_SA",
-    siteName: "منصة التكامل الصناعي",
-    title: "منصة التكامل الصناعي",
+    siteName: "منصة تآزر الصناعية",
+    title: "منصة تآزر الصناعية",
     description: "منصة تربط المصانع السعودية الصغيرة والمتوسطة للشراء الجماعي وتبادل الطاقة الإنتاجية",
   },
   twitter: {
     card: "summary_large_image",
-    title: "منصة التكامل الصناعي",
+    title: "منصة تآزر الصناعية",
     description: "منصة تربط المصانع السعودية الصغيرة والمتوسطة",
   },
   robots: {

@@ -58,7 +58,7 @@ export default function AdminSidebar() {
             <Shield className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="font-bold text-lg">تكامل</h1>
+            <h1 className="font-bold text-lg">تآزر</h1>
             <p className="text-xs text-gray-400">لوحة الإدارة</p>
           </div>
         </div>

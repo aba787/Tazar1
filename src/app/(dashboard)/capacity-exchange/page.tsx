@@ -433,6 +433,8 @@ export default function CapacityExchangePage() {
     return matchesSearch && matchesCategory && matchesContract;
   });
 
+  const [showAddCapacityModal, setShowAddCapacityModal] = useState(false);
+
   const handleRequestQuote = (equipment: EquipmentCapability) => {
     setSelectedEquipment(equipment);
     setIsRFQModalOpen(true);
@@ -462,7 +464,7 @@ export default function CapacityExchangePage() {
             منصة التعاقد من الباطن - اطلب عروض أسعار من المصانع الشريكة
           </p>
         </div>
-        <Button size="lg">
+        <Button size="lg" onClick={() => setShowAddCapacityModal(true)}>
           <Plus className="ml-2 h-5 w-5" />
           أضف قدراتك الإنتاجية
         </Button>
@@ -592,6 +594,86 @@ export default function CapacityExchangePage() {
           </Button>
         </div>
       )}
+
+      {/* Add Capacity Modal */}
+      <AnimatePresence>
+        {showAddCapacityModal && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAddCapacityModal(false)}
+            />
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+            >
+              <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-bold">أضف قدراتك الإنتاجية</h2>
+                  <button
+                    onClick={() => setShowAddCapacityModal(false)}
+                    className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">اسم المعدة</label>
+                    <input
+                      type="text"
+                      placeholder="مثال: ماكينة CNC خمس محاور"
+                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">النوع</label>
+                    <select className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                      <option value="CNC">CNC</option>
+                      <option value="3D_PRINT">طباعة ثلاثية الأبعاد</option>
+                      <option value="WELDING">لحام</option>
+                      <option value="LASER">قص ليزر</option>
+                      <option value="MOLD">قوالب</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">الوصف</label>
+                    <textarea
+                      rows={3}
+                      placeholder="وصف تفصيلي للقدرة الإنتاجية..."
+                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">السعر (ر.س./ساعة)</label>
+                    <input
+                      type="number"
+                      placeholder="500"
+                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button className="flex-1" onClick={() => setShowAddCapacityModal(false)}>
+                    <CheckCircle className="ml-2 h-4 w-4" />
+                    إضافة
+                  </Button>
+                  <Button variant="outline" onClick={() => setShowAddCapacityModal(false)}>
+                    إلغاء
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* RFQ Modal */}
       {selectedEquipment && (
