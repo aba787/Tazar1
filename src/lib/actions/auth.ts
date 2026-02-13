@@ -31,6 +31,90 @@ function validatePassword(password: string): { valid: boolean; error?: string } 
   return { valid: true };
 }
 
+export async function sendOtp(email: string): Promise<AuthResult> {
+  if (!email) {
+    return { success: false, error: 'البريد الإلكتروني مطلوب' };
+  }
+
+  const sanitizedEmail = sanitizeEmail(email);
+
+  if (!validateEmail(sanitizedEmail)) {
+    return { success: false, error: 'البريد الإلكتروني غير صالح' };
+  }
+
+  const rateLimit = checkRateLimit(`otp:${sanitizedEmail}`, authRateLimitConfig);
+  if (!rateLimit.allowed) {
+    const minutesLeft = Math.ceil(rateLimit.resetInMs / 60000);
+    return { success: false, error: `تم تجاوز عدد المحاولات. حاول مرة أخرى بعد ${minutesLeft} دقيقة` };
+  }
+
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email: sanitizedEmail,
+  });
+
+  if (error) {
+    return { success: false, error: 'حدث خطأ أثناء إرسال الكود. يرجى المحاولة مرة أخرى' };
+  }
+
+  return {
+    success: true,
+    message: 'تم إرسال الكود إلى بريدك الإلكتروني',
+  };
+}
+
+export async function verifyOtp(email: string, token: string): Promise<AuthResult> {
+  if (!email || !token) {
+    return { success: false, error: 'البريد الإلكتروني والكود مطلوبان' };
+  }
+
+  const sanitizedEmail = sanitizeEmail(email);
+
+  if (!validateEmail(sanitizedEmail)) {
+    return { success: false, error: 'البريد الإلكتروني غير صالح' };
+  }
+
+  if (token.length !== 6 || !/^\d{6}$/.test(token)) {
+    return { success: false, error: 'الكود يجب أن يكون 6 أرقام' };
+  }
+
+  const rateLimit = checkRateLimit(`verify:${sanitizedEmail}`, authRateLimitConfig);
+  if (!rateLimit.allowed) {
+    const minutesLeft = Math.ceil(rateLimit.resetInMs / 60000);
+    return { success: false, error: `تم تجاوز عدد المحاولات. حاول مرة أخرى بعد ${minutesLeft} دقيقة` };
+  }
+
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.verifyOtp({
+    email: sanitizedEmail,
+    token,
+    type: 'email',
+  });
+
+  if (error) {
+    if (error.message.includes('expired')) {
+      return { success: false, error: 'انتهت صلاحية الكود. يرجى طلب كود جديد' };
+    }
+    return { success: false, error: 'الكود غير صحيح. يرجى المحاولة مرة أخرى' };
+  }
+
+  resetRateLimit(`verify:${sanitizedEmail}`);
+  resetRateLimit(`otp:${sanitizedEmail}`);
+
+  const { data: roleData } = await supabase
+    .from('user_roles')
+    .select('role')
+    .eq('user_id', (await supabase.auth.getUser()).data.user?.id || '')
+    .eq('is_active', true)
+    .in('role', ['admin', 'super_admin'])
+    .maybeSingle();
+
+  revalidatePath('/', 'layout');
+  return { success: true, isAdmin: !!roleData };
+}
+
 export async function signUp(formData: FormData): Promise<AuthResult> {
   const supabase = await createClient();
 

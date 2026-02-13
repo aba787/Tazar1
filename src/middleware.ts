@@ -49,12 +49,12 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const protectedPaths = ['/overview', '/group-buying', '/capacity-exchange', '/settings'];
+  const protectedPaths = ['/overview', '/group-buying', '/capacity-exchange', '/settings', '/orders'];
   const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   );
 
-  const authPaths = ['/login', '/register', '/forgot-password'];
+  const authPaths = ['/login', '/register', '/forgot-password', '/verify-otp'];
   const isAuthPath = authPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   );
