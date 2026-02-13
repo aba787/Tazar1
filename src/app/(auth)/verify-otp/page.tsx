@@ -12,6 +12,8 @@ function VerifyOtpForm() {
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
   const redirect = searchParams.get('redirect') || '/overview';
+  const fullName = searchParams.get('fullName') || '';
+  const phone = searchParams.get('phone') || '';
 
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const isVerifyingRef = useRef(false);
@@ -96,7 +98,8 @@ function VerifyOtpForm() {
     setIsResending(true);
     setFormError(null);
 
-    const result = await sendOtp(email);
+    const metadata = fullName && phone ? { fullName, phone } : undefined;
+    const result = await sendOtp(email, metadata);
 
     if (result.success) {
       setResendCooldown(60);

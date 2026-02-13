@@ -4,6 +4,16 @@
 Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2026-02-13**: Unified OTP authentication (no passwords)
+  - Replaced password-based login/signup with OTP-only email code flow
+  - Registration: name + phone + email → send OTP code → verify → auto-login
+  - Login: email → send OTP code → verify → dashboard
+  - User metadata (name, phone) stored via Supabase signInWithOtp options.data
+  - Removed password fields, forgot-password, and reset-password flows
+  - Rate limiting on sendOtp, signUpWithOtp, and verifyOtp
+  - Redirect parameter preserved through entire OTP flow
+  - Resend with 60-second cooldown and metadata preservation
+
 - **2026-02-11**: Complete bug fix pass before launch
   - Rebranded all UI from "تكامل" (Takamul) to "تآزر" (Ta'azur) across entire codebase
   - Updated button labels: "إنشاء طلب" → "إنشاء طلب خاص", "إنشاء صفقة" → "اقتراح إضافة صفقة"
@@ -88,11 +98,14 @@ Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factor
 - **SmartAggregator**: AI-powered deal suggestions
 
 ### Authentication
-- Supabase Auth with email/password
+- Supabase Auth with OTP (email code, no passwords)
+- Login: email → OTP code → verify → dashboard
+- Registration: name + phone + email → OTP code → verify → auto-login
 - Server-side session management
 - Role-based access control (admin, super_admin)
-- Rate limiting on auth endpoints
+- Rate limiting on sendOtp, signUpWithOtp, verifyOtp
 - Protected routes via middleware
+- Redirect parameter preserved through OTP flow
 
 ### Brand Identity
 - Name: تآزر (Ta'azur)
