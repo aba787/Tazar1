@@ -48,6 +48,11 @@ const navItems: NavItem[] = [
     badge: 2,
   },
   {
+    title: 'التحويل البنكي',
+    href: '/bank-transfer',
+    icon: <Building2 className="h-5 w-5" />,
+  },
+  {
     title: 'الإعدادات',
     href: '/settings',
     icon: <Settings className="h-5 w-5" />,

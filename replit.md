@@ -4,6 +4,15 @@
 Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2026-02-13**: Bank transfer payment system
+  - New /bank-transfer page with bank info display and receipt upload
+  - Supabase Storage bucket (bank-receipts) for receipt images with RLS
+  - bank_transfers table with unique constraint (one pending per user)
+  - Admin /admin/bank-transfers page with approve/reject functionality
+  - Receipt viewer modal in admin panel
+  - Auto-activation of factory account on approval
+  - Navigation links in user sidebar and admin sidebar
+
 - **2026-02-13**: Unified OTP authentication (no passwords)
   - Replaced password-based login/signup with OTP-only email code flow
   - Registration: name + phone + email → send OTP code → verify → auto-login
