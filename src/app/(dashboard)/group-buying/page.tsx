@@ -35,6 +35,7 @@ import type {
   DealStatus,
   MaterialType,
   AggregatorDisplayData,
+  DealParticipation,
 } from '@/types';
 import {
   DEAL_STATUS_LABELS,
@@ -460,7 +461,7 @@ export default function GroupBuyingPage() {
           return {
             ...d,
             currentQuantity: d.currentQuantity + addedQty,
-            participantCount: d.participantCount + 1,
+            participations: [...d.participations, {} as DealParticipation],
           };
         }
         return d;
@@ -647,8 +648,8 @@ export default function GroupBuyingPage() {
               <div className="p-6 space-y-6">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant={viewingDeal.status === 'active' ? 'success' : 'warning'}>
-                      {viewingDeal.status === 'active' ? 'نشط' : viewingDeal.status}
+                    <Badge variant={viewingDeal.status === 'open' ? 'success' : 'warning'}>
+                      {DEAL_STATUS_LABELS[viewingDeal.status] || viewingDeal.status}
                     </Badge>
                     <span className="text-xs text-muted-foreground">{viewingDeal.category}</span>
                   </div>
@@ -663,11 +664,11 @@ export default function GroupBuyingPage() {
                   </div>
                   <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
                     <p className="text-xs text-muted-foreground mb-1">الكمية المستهدفة</p>
-                    <p className="text-lg font-bold">{viewingDeal.targetQuantity.toLocaleString('ar-SA')} {viewingDeal.unit}</p>
+                    <p className="text-lg font-bold">{(viewingDeal.maxQuantity || viewingDeal.minQuantity).toLocaleString('ar-SA')} {viewingDeal.unit}</p>
                   </div>
                   <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
                     <p className="text-xs text-muted-foreground mb-1">المشاركون</p>
-                    <p className="text-lg font-bold">{viewingDeal.participantCount} مصنع</p>
+                    <p className="text-lg font-bold">{viewingDeal.participations.length} مصنع</p>
                   </div>
                   <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
                     <p className="text-xs text-muted-foreground mb-1">سعر السوق</p>
@@ -713,11 +714,11 @@ export default function GroupBuyingPage() {
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                     <div
                       className="bg-emerald-500 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min(100, (viewingDeal.currentQuantity / viewingDeal.targetQuantity) * 100)}%` }}
+                      style={{ width: `${Math.min(100, (viewingDeal.currentQuantity / (viewingDeal.maxQuantity || viewingDeal.minQuantity)) * 100)}%` }}
                     />
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {Math.round((viewingDeal.currentQuantity / viewingDeal.targetQuantity) * 100)}% من الهدف
+                    {Math.round((viewingDeal.currentQuantity / (viewingDeal.maxQuantity || viewingDeal.minQuantity)) * 100)}% من الهدف
                   </p>
                 </div>
 
