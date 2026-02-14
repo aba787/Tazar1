@@ -13,6 +13,7 @@ run = ["npm", "run", "start"]
 deploymentTarget = "autoscale"
 ignorePorts = false
 build = ["npm", "run", "build"]
+publicDir = "public"
 
 [agent]
 expertMode = true
