@@ -1,0 +1,187 @@
+1) رجّع الأمان: لا كلمات مرور هاردكود للأدمن
+
+ممنوع نخزن كلمة مرور/توكن أدمن داخل الكود.
+
+يعتمد الأدمن على قاعدة البيانات + RBAC:
+
+جدول user_roles (موجود عندنا) وفيه user_id و role.
+
+أي صلاحية أدمن تتحدد من DB فقط.
+
+أي صفحة/Server Action إداري لازم يسوي:
+
+isAdmin(auth.uid()) (تحقق من DB)
+
+وإذا مو أدمن → رفض مباشر.
+
+2) Rate Limiting: لا يكون “ذاكرة فقط”
+
+المطلوب:
+
+نقل الـ Rate Limiting من memory إلى Redis / Upstash / Supabase table (حسب الأسهل).
+
+يكون فيه TTL وتخزين دائم حتى لو السيرفر restart.
+
+تطبيق Rate Limiting على:
+
+Login / OTP
+
+إنشاء الصفقات
+
+أي عمليات Admin (تعيين صلاحيات، إيقاف صفقة… إلخ)
+
+3) تنظيف المدخلات + حماية XSS
+
+المطلوب إلزامي:
+
+Sanitize للنصوص اللي تنعرض بالموقع:
+
+title / description / factory_name / notes … إلخ
+
+منع إدخال JavaScript أو HTML خبيث.
+
+لا تستخدم dangerouslySetInnerHTML نهائياً.
+
+أضف Validation + Sanitization:
+
+zod للتحقق
+
+DOMPurify (لو فيه HTML) أو منع HTML بالكامل
+
+4) تحقق حجم/نوع المدخلات (Validation)
+
+المطلوب:
+
+تحديد أقصى طول لكل حقل (Server-side + Client-side):
+
+title: 120
+
+description: 2000
+
+notes: 1000
+
+تحديد types صح (ints/uuid/enums)
+
+منع payload كبير جدًا (Body size limit)
+
+5) Security Headers (ضروري للإنتاج)
+
+أضف هيدر:
+
+Content-Security-Policy (CSP) (على الأقل منع inline script)
+
+Strict-Transport-Security (HSTS) للإنتاج فقط
+
+X-Content-Type-Options: nosniff
+
+Referrer-Policy
+
+Permissions-Policy
+
+ملاحظة:
+
+X-Frame-Options: DENY ممتاز للإنتاج، لكن في Replit dev خليه قابل للتشغيل:
+
+Dev: allow iframe أو تعطيله
+
+Prod: DENY
+
+6) Rate Limiting + Audit Log للأدمن
+
+المطلوب:
+
+Limiter خاص للعمليات الإدارية الحساسة.
+
+تسجيل كل شيء في admin_logs:
+
+مين؟ (admin user_id)
+
+وش سوا؟
+
+على مين؟
+
+وقت العملية
+
+IP/User-Agent إذا ممكن
+
+7) تقصير صلاحية رابط الإيصال
+
+الـ signed URL للإيصال يكون 15 دقيقة بدل 60 دقيقة.
+
+وإذا احتجناه مرة ثانية، نولد واحد جديد.
+
+8) تتبع الطلبات (Order Tracking) — مطلوب تشغيل فعلي
+
+نضيف Tracking واضح للمستخدم بعد تأكيد الطلب:
+
+حالات التتبع المقترحة
+
+تم استلام الطلب
+
+قيد المعالجة
+
+تم طلب المواد
+
+قيد التجهيز / بالمستودع
+
+تم الشحن
+
+قيد التوصيل
+
+تم التسليم
+
+عرضها كـ Timeline داخل صفحة الطلب + API لحفظ الحالة.
+
+9) حالات الصفقة (Deal Lifecycle) + ألوان الحالة
+
+نعدل Lifecycle للصفقات:
+
+مستقبلي = أزرق
+
+متوفر حاليًا = أصفر
+
+منتهية = أخضر
+
+(الألوان المطلوبة):
+
+أزرق: #2563EB (أو أي Blue واضح)
+
+أصفر: #F59E0B
+
+أخضر: #10B981
+
+وتتغير تلقائيًا حسب start_date و end_date أو يدويًا من الأدمن.
+
+10) تحديث ألوان المشروع حسب الهوية الجديدة
+
+تغيير theme الأساسي للمشروع:
+
+الأسود: #000000
+
+الرمادي الغامق (تاريخ/نص فرعي): #575757
+
+الرمادي الفاتح للخلفية: #E6E6E6
+
+خلفية أفتح: #F2F2F2
+
+المطلوب:
+
+تعديل Tailwind theme variables (أو CSS variables)
+
+توحيدها في ملف واحد (مثلاً globals.css أو tailwind.config)
+
+11) المطلوب تسليم
+
+أبي منك:
+
+PR واحد فيه كل التعديلات
+
+قائمة تغييرات واضحة
+
+اختبار:
+
+كـ Admin
+
+كـ User
+
+بدون ما يكسر Replit dev

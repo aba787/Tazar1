@@ -3,6 +3,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { isAdmin } from './admin';
+import { sanitizeText } from '@/lib/sanitize';
+import { checkRateLimit, adminRateLimitConfig } from '@/lib/rate-limit';
 
 export interface BankTransferResult {
   success: boolean;
@@ -65,8 +67,8 @@ export async function createBankTransfer(data: {
     .insert({
       user_id: user.id,
       amount: data.amount,
-      sender_name: data.senderName.trim().slice(0, 200),
-      reference_number: data.referenceNumber.trim().slice(0, 100),
+      sender_name: sanitizeText(data.senderName.trim().slice(0, 200)),
+      reference_number: sanitizeText(data.referenceNumber.trim().slice(0, 100)),
       transfer_date: data.transferDate,
       receipt_url: data.receiptPath,
       status: 'pending',
@@ -106,7 +108,7 @@ export async function getReceiptSignedUrl(receiptPath: string): Promise<string |
 
   const { data } = await supabase.storage
     .from('bank-receipts')
-    .createSignedUrl(receiptPath, 3600);
+    .createSignedUrl(receiptPath, 900);
 
   return data?.signedUrl || null;
 }
@@ -144,6 +146,13 @@ export async function adminUpdateTransferStatus(
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  if (user) {
+    const rl = await checkRateLimit(`admin:${user.id}`, adminRateLimitConfig);
+    if (!rl.allowed) {
+      return { success: false, error: 'تم تجاوز عدد المحاولات. حاول لاحقاً' };
+    }
+  }
+
   const { data: transfer } = await supabase
     .from('bank_transfers')
     .select('user_id')
@@ -158,7 +167,7 @@ export async function adminUpdateTransferStatus(
     .from('bank_transfers')
     .update({
       status,
-      admin_note: adminNote || null,
+      admin_note: adminNote ? sanitizeText(adminNote.slice(0, 1000)) : null,
       reviewed_by: user?.id,
       reviewed_at: new Date().toISOString(),
     })
@@ -167,6 +176,14 @@ export async function adminUpdateTransferStatus(
   if (error) {
     return { success: false, error: 'حدث خطأ أثناء تحديث الحالة' };
   }
+
+  await supabase.from('admin_logs').insert({
+    admin_id: user?.id,
+    action: status === 'approved' ? 'approve_transfer' : 'reject_transfer',
+    target_type: 'bank_transfer',
+    target_id: transferId,
+    details: { status, admin_note: adminNote || null },
+  });
 
   if (status === 'approved') {
     const { data: existingFactory } = await supabase
@@ -198,7 +215,7 @@ export async function adminGetReceiptUrl(receiptPath: string): Promise<string | 
 
   const { data } = await supabase.storage
     .from('bank-receipts')
-    .createSignedUrl(receiptPath, 3600);
+    .createSignedUrl(receiptPath, 900);
 
   return data?.signedUrl || null;
 }

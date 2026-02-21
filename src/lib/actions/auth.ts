@@ -32,7 +32,7 @@ export async function sendOtp(email: string, metadata?: { fullName?: string; pho
     return { success: false, error: 'البريد الإلكتروني غير صالح' };
   }
 
-  const rateLimit = checkRateLimit(`otp:${sanitizedEmail}`, authRateLimitConfig);
+  const rateLimit = await checkRateLimit(`otp:${sanitizedEmail}`, authRateLimitConfig);
   if (!rateLimit.allowed) {
     const minutesLeft = Math.ceil(rateLimit.resetInMs / 60000);
     return { success: false, error: `تم تجاوز عدد المحاولات. حاول مرة أخرى بعد ${minutesLeft} دقيقة` };
@@ -89,7 +89,7 @@ export async function signUpWithOtp(
     return { success: false, error: 'الاسم يجب أن يكون حرفين على الأقل' };
   }
 
-  const rateLimit = checkRateLimit(`signup:${sanitizedEmail}`, authRateLimitConfig);
+  const rateLimit = await checkRateLimit(`signup:${sanitizedEmail}`, authRateLimitConfig);
   if (!rateLimit.allowed) {
     const minutesLeft = Math.ceil(rateLimit.resetInMs / 60000);
     return { success: false, error: `تم تجاوز عدد المحاولات. حاول مرة أخرى بعد ${minutesLeft} دقيقة` };
@@ -116,7 +116,7 @@ export async function verifyOtp(email: string, token: string): Promise<AuthResul
     return { success: false, error: 'الكود يجب أن يكون 6 أرقام' };
   }
 
-  const rateLimit = checkRateLimit(`verify:${sanitizedEmail}`, authRateLimitConfig);
+  const rateLimit = await checkRateLimit(`verify:${sanitizedEmail}`, authRateLimitConfig);
   if (!rateLimit.allowed) {
     const minutesLeft = Math.ceil(rateLimit.resetInMs / 60000);
     return { success: false, error: `تم تجاوز عدد المحاولات. حاول مرة أخرى بعد ${minutesLeft} دقيقة` };
@@ -137,9 +137,9 @@ export async function verifyOtp(email: string, token: string): Promise<AuthResul
     return { success: false, error: 'الكود غير صحيح. يرجى المحاولة مرة أخرى' };
   }
 
-  resetRateLimit(`verify:${sanitizedEmail}`);
-  resetRateLimit(`otp:${sanitizedEmail}`);
-  resetRateLimit(`signup:${sanitizedEmail}`);
+  await resetRateLimit(`verify:${sanitizedEmail}`);
+  await resetRateLimit(`otp:${sanitizedEmail}`);
+  await resetRateLimit(`signup:${sanitizedEmail}`);
 
   const { data: roleData } = await supabase
     .from('user_roles')

@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import type { IndustryType } from '@/types';
+import { sanitizeText } from '@/lib/sanitize';
 
 export interface OnboardingResult {
   success: boolean;
@@ -75,8 +76,8 @@ export async function saveBasicInfo(data: {
     const { error } = await supabase
       .from('factories')
       .update({
-        name: data.factoryName,
-        name_en: data.factoryNameEn,
+        name: sanitizeText(data.factoryName),
+        name_en: data.factoryNameEn ? sanitizeText(data.factoryNameEn) : undefined,
         commercial_registration: data.commercialRegisterNumber,
         vat_number: data.vatNumber,
         established_year: data.establishedYear,
@@ -97,8 +98,8 @@ export async function saveBasicInfo(data: {
     .from('factories')
     .insert({
       user_id: user.id,
-      name: data.factoryName,
-      name_en: data.factoryNameEn,
+      name: sanitizeText(data.factoryName),
+      name_en: data.factoryNameEn ? sanitizeText(data.factoryNameEn) : undefined,
       commercial_registration: data.commercialRegisterNumber,
       vat_number: data.vatNumber,
       established_year: data.establishedYear,
@@ -166,9 +167,9 @@ export async function saveLocationInfo(data: {
   const { error } = await supabase
     .from('factories')
     .update({
-      city: data.city,
-      district: data.district,
-      address: data.street,
+      city: sanitizeText(data.city),
+      district: sanitizeText(data.district),
+      address: sanitizeText(data.street),
       postal_code: data.postalCode,
       latitude: data.latitude,
       longitude: data.longitude,
@@ -224,7 +225,7 @@ export async function saveCapabilities(data: {
   await supabase
     .from('factories')
     .update({
-      description: data.description,
+      description: sanitizeText(data.description),
       industry_type: data.categories[0], // Primary industry
       onboarding_step: 4,
       updated_at: new Date().toISOString(),

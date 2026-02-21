@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { sanitizeText } from '@/lib/sanitize';
+import { checkRateLimit, dealCreationRateLimitConfig } from '@/lib/rate-limit';
 
 interface CreateDealData {
   title: string;
@@ -60,16 +62,32 @@ export async function createDeal(data: CreateDealData): Promise<{ success: boole
   if (!data.title || data.title.trim().length < 5) {
     return { success: false, error: 'عنوان الصفقة يجب أن يكون 5 أحرف على الأقل' };
   }
+
+  if (data.title.trim().length > 120) {
+    return { success: false, error: 'العنوان يجب ألا يتجاوز 120 حرف' };
+  }
+
+  if (data.description && data.description.length > 2000) {
+    return { success: false, error: 'الوصف يجب ألا يتجاوز 2000 حرف' };
+  }
   
   if (data.minQuantity <= 0) {
     return { success: false, error: 'الحد الأدنى للكمية يجب أن يكون أكبر من صفر' };
   }
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    const rl = await checkRateLimit(`deal:${user.id}`, dealCreationRateLimitConfig);
+    if (!rl.allowed) {
+      return { success: false, error: 'تم تجاوز عدد المحاولات لإنشاء الصفقات. حاول لاحقاً' };
+    }
+  }
+
   const { data: deal, error } = await supabase
     .from('procurement_deals')
     .insert({
-      title: data.title.trim(),
-      description: data.description?.trim(),
+      title: sanitizeText(data.title.trim()),
+      description: data.description ? sanitizeText(data.description.trim()) : undefined,
       material_type: data.materialType,
       material_specs: data.materialSpecs || {},
       min_quantity: data.minQuantity,

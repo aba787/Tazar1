@@ -686,18 +686,42 @@ export const DEAL_STATUS_LABELS: Record<DealStatus, string> = {
 
 export const DEAL_STATUS_COLORS: Record<DealStatus, string> = {
   draft: 'bg-gray-100 text-gray-700',
-  open: 'bg-emerald-100 text-emerald-700',
-  aggregating: 'bg-blue-100 text-blue-700',
-  pending_commitment: 'bg-amber-100 text-amber-700',
-  rfq_open: 'bg-purple-100 text-purple-700',
-  evaluating_bids: 'bg-indigo-100 text-indigo-700',
-  awarded: 'bg-teal-100 text-teal-700',
-  in_production: 'bg-orange-100 text-orange-700',
-  shipping: 'bg-cyan-100 text-cyan-700',
-  delivered: 'bg-green-100 text-green-700',
+  open: 'bg-yellow-100 text-yellow-700',
+  aggregating: 'bg-yellow-100 text-yellow-700',
+  pending_commitment: 'bg-yellow-100 text-yellow-700',
+  rfq_open: 'bg-blue-100 text-blue-700',
+  evaluating_bids: 'bg-blue-100 text-blue-700',
+  awarded: 'bg-blue-100 text-blue-700',
+  in_production: 'bg-blue-100 text-blue-700',
+  shipping: 'bg-blue-100 text-blue-700',
+  delivered: 'bg-emerald-100 text-emerald-700',
   completed: 'bg-emerald-100 text-emerald-700',
   cancelled: 'bg-red-100 text-red-700',
 };
+
+export type DealLifecycle = 'upcoming' | 'available' | 'ended';
+
+export const DEAL_LIFECYCLE_COLORS: Record<DealLifecycle, string> = {
+  upcoming: 'bg-[#2563EB] text-white',
+  available: 'bg-[#F59E0B] text-white',
+  ended: 'bg-[#10B981] text-white',
+};
+
+export const DEAL_LIFECYCLE_LABELS: Record<DealLifecycle, string> = {
+  upcoming: 'مستقبلي',
+  available: 'متوفر حالياً',
+  ended: 'منتهية',
+};
+
+export function getDealLifecycle(deal: { status: DealStatus; aggregationDeadline?: string | null }): DealLifecycle {
+  const completedStatuses: DealStatus[] = ['completed', 'delivered', 'cancelled'];
+  if (completedStatuses.includes(deal.status)) return 'ended';
+
+  const activeStatuses: DealStatus[] = ['open', 'aggregating', 'pending_commitment', 'rfq_open', 'evaluating_bids'];
+  if (activeStatuses.includes(deal.status)) return 'available';
+
+  return 'upcoming';
+}
 
 export type DealParticipationStatus =
   | 'interested'     // مهتم

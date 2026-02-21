@@ -29,38 +29,38 @@
    ======================================== */
 
 :root {
-  /* Neutral Grays */
-  --background: 0 0% 98%;
-  --foreground: 0 0% 9%;
+  /* Brand Colors: #000000, #575757, #E6E6E6, #F2F2F2 */
+  --background: 0 0% 95%;
+  --foreground: 0 0% 0%;
 
-  /* Primary - Neutral Dark */
-  --primary: 0 0% 15%;
-  --primary-foreground: 0 0% 98%;
+  /* Primary - Black */
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
 
-  /* Secondary - Warm Gray */
-  --secondary: 30 5% 45%;
-  --secondary-foreground: 0 0% 98%;
+  /* Secondary - Dark Gray #575757 */
+  --secondary: 0 0% 34%;
+  --secondary-foreground: 0 0% 100%;
 
-  /* Accent - Soft Warm */
-  --accent: 30 10% 90%;
-  --accent-foreground: 0 0% 15%;
+  /* Accent - Light Gray #E6E6E6 */
+  --accent: 0 0% 90%;
+  --accent-foreground: 0 0% 0%;
 
-  /* Muted */
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
+  /* Muted - #F2F2F2 */
+  --muted: 0 0% 95%;
+  --muted-foreground: 0 0% 34%;
 
   /* Card */
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 9%;
+  --card-foreground: 0 0% 0%;
 
   /* Popover */
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 9%;
+  --popover-foreground: 0 0% 0%;
 
-  /* Border */
+  /* Border - #E6E6E6 */
   --border: 0 0% 90%;
   --input: 0 0% 90%;
-  --ring: 0 0% 15%;
+  --ring: 0 0% 0%;
 
   /* Status Colors - Apple Design System */
   --destructive: 0 100% 50%;

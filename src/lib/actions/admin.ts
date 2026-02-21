@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { sanitizeText } from '@/lib/sanitize';
+import { checkRateLimit, adminRateLimitConfig } from '@/lib/rate-limit';
 
 export type UserRole = 'user' | 'admin' | 'super_admin' | 'moderator';
 
@@ -71,6 +73,11 @@ export async function grantRole(
     return { success: false, error: 'غير مصرح - يجب أن تكون مسؤولاً متميزاً' };
   }
 
+  const rl = await checkRateLimit(`admin:${user.id}`, adminRateLimitConfig);
+  if (!rl.allowed) {
+    return { success: false, error: 'تم تجاوز عدد المحاولات. حاول لاحقاً' };
+  }
+
   const { error } = await supabase
     .from('user_roles')
     .insert({
@@ -110,6 +117,11 @@ export async function revokeRole(
   const isSuperAdminUser = await isSuperAdmin();
   if (!isSuperAdminUser) {
     return { success: false, error: 'غير مصرح - يجب أن تكون مسؤولاً متميزاً' };
+  }
+
+  const rl = await checkRateLimit(`admin:${user.id}`, adminRateLimitConfig);
+  if (!rl.allowed) {
+    return { success: false, error: 'تم تجاوز عدد المحاولات. حاول لاحقاً' };
   }
 
   const { error } = await supabase
@@ -320,7 +332,7 @@ export async function rejectFactory(factoryId: string, reason: string) {
     return { success: false, error: 'يجب تقديم سبب الرفض (10 أحرف على الأقل)' };
   }
 
-  const sanitizedReason = reason.trim().slice(0, 1000);
+  const sanitizedReason = sanitizeText(reason.trim().slice(0, 1000));
 
   const { error } = await supabase
     .from('factories')
@@ -370,7 +382,7 @@ export async function suspendFactory(factoryId: string, reason: string) {
     return { success: false, error: 'يجب تقديم سبب الإيقاف (10 أحرف على الأقل)' };
   }
 
-  const sanitizedReason = reason.trim().slice(0, 1000);
+  const sanitizedReason = sanitizeText(reason.trim().slice(0, 1000));
 
   const { error } = await supabase
     .from('factories')
