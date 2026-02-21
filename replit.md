@@ -4,6 +4,18 @@
 Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2026-02-21**: Comprehensive security hardening and UI improvements
+  - Persistent rate limiting using Supabase database (migration 008_rate_limits.sql)
+  - Input sanitization utility (sanitize.ts) with Zod validation schemas
+  - Sanitization applied across all server actions (auth, admin, procurement, onboarding, bank-transfers)
+  - Security headers: CSP, HSTS, Referrer-Policy, Permissions-Policy, X-Content-Type-Options
+  - Admin rate limiting + audit logging for bank transfer operations
+  - Signed URL expiration reduced from 3600s to 900s (15 minutes)
+  - Order tracking page rewritten with real data from Supabase + timeline UI
+  - Deal lifecycle colors system (upcoming=#2563EB, available=#F59E0B, ended=#10B981)
+  - Theme update: black=#000000, dark gray=#575757, light gray=#E6E6E6, bg=#F2F2F2
+  - Deal creation rate limiting (5 attempts/10min)
+
 - **2026-02-13**: Bank transfer payment system
   - New /bank-transfer page with bank info display and receipt upload
   - Supabase Storage bucket (bank-receipts) for receipt images with RLS
