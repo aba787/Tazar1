@@ -20,12 +20,13 @@ import { createBankTransfer, getUserTransfers, type BankTransfer } from '@/lib/a
 import { createClient } from '@/lib/supabase/client';
 
 const BANK_INFO = {
-  bankName: 'البنك الأهلي السعودي',
-  iban: 'SA0380000000608010167519',
-  beneficiary: 'شركة تآزر للتقنية',
-  amount: 2500,
+  bankName: 'البنك الأهلي السعودي (SNB)',
+  iban: 'SA8410000001400035419004', // الآيبان المستخرج من الرسالة
+  accountNumber: '01400035419004',
+  swiftCode: 'NCBKSAJE',
+  beneficiary: '', // تركتها فارغة لتعبئتها عند الحاجة
+  amount: null,    // يمكن للمستخدم إدخال أي مبلغ يريده هنا
 };
-
 const statusLabels: Record<string, string> = {
   pending: 'قيد المراجعة',
   approved: 'معتمد',
