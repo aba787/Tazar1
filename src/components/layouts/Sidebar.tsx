@@ -134,7 +134,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 title={isDark ? 'الوضع الفاتح' : 'الوضع الداكن'}
               >
                 {isDark ? (
-                  <Sun className="h-5 w-5 text-yellow-400" />
+                  <Sun className="h-5 w-5 text-foreground" />
                 ) : (
                   <Moon className="h-5 w-5" />
                 )}

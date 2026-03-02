@@ -131,7 +131,7 @@ export function Header({ onMenuClick }: HeaderProps) {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'deal':
-        return <ShoppingCart className="h-4 w-4 text-emerald-500" />;
+        return <ShoppingCart className="h-4 w-4 text-foreground" />;
       case 'equipment':
         return <Cog className="h-4 w-4 text-blue-500" />;
       default:
@@ -221,7 +221,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-xs text-emerald-600 hover:text-emerald-700 transition-colors"
+                      className="text-xs text-foreground hover:text-foreground/80 transition-colors"
                     >
                       تحديد الكل كمقروء
                     </button>
@@ -253,7 +253,7 @@ export function Header({ onMenuClick }: HeaderProps) {
                               {notif.title}
                             </p>
                             {!notif.read && (
-                              <span className="h-2 w-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                              <span className="h-2 w-2 rounded-full bg-foreground flex-shrink-0" />
                             )}
                           </div>
                           <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">

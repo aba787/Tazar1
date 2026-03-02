@@ -96,7 +96,7 @@ export default function AdminBankTransfersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
-            <Building2 className="h-7 w-7 text-emerald-600" />
+            <Building2 className="h-7 w-7 text-gray-700 dark:text-gray-300" />
             طلبات التحويل البنكي
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
@@ -116,14 +116,14 @@ export default function AdminBankTransfersPage() {
         <div className={`p-4 rounded-xl flex items-center gap-3 ${
           error
             ? 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-            : 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800'
+            : 'bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600'
         }`}>
           {error ? (
             <AlertCircle className="h-5 w-5 text-red-600" />
           ) : (
-            <CheckCircle className="h-5 w-5 text-emerald-600" />
+            <CheckCircle className="h-5 w-5 text-gray-700 dark:text-gray-300" />
           )}
-          <p className={`text-sm ${error ? 'text-red-600' : 'text-emerald-600'}`}>
+          <p className={`text-sm ${error ? 'text-red-600' : 'text-gray-700 dark:text-gray-300'}`}>
             {error || successMsg}
           </p>
         </div>
@@ -156,14 +156,14 @@ export default function AdminBankTransfersPage() {
             placeholder="بحث باسم المحول أو رقم المرجع..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-10 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-emerald-500"
+            className="w-full h-10 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm focus:ring-2 focus:ring-gray-500"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+          <Loader2 className="h-8 w-8 animate-spin text-gray-600 dark:text-gray-400" />
         </div>
       ) : filteredTransfers.length === 0 ? (
         <div className="text-center py-20">
@@ -225,7 +225,7 @@ export default function AdminBankTransfersPage() {
                           <button
                             onClick={() => handleUpdateStatus(transfer.id, 'approved')}
                             disabled={actionLoading === transfer.id}
-                            className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors disabled:opacity-50"
+                            className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
                             title="اعتماد"
                           >
                             {actionLoading === transfer.id ? (

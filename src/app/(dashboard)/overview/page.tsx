@@ -113,8 +113,8 @@ const sparklineData = [35, 42, 38, 50, 45, 55, 60, 58, 70, 75, 72, 80];
 // ============================================================================
 
 const glassCardClass = `
-  rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl
-  border border-gray-200/50 dark:border-gray-700/50
+  rounded-2xl bg-card/80 dark:bg-card/80 backdrop-blur-xl
+  border border-border/50 dark:border-border/50
   shadow-[0_8px_32px_rgba(0,0,0,0.06)]
   hover:shadow-[0_16px_48px_rgba(0,0,0,0.1)]
   hover:-translate-y-0.5 transition-all duration-300
@@ -136,15 +136,15 @@ const Sparkline = ({ data, className }: { data: number[]; className?: string }) 
     >
       <defs>
         <linearGradient id="sparkline-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="rgb(16, 185, 129)" stopOpacity="0" />
+          <stop offset="0%" stopColor="rgb(87, 87, 87)" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="rgb(87, 87, 87)" stopOpacity="0" />
         </linearGradient>
       </defs>
       <polygon points={`0,100 ${points} 100,100`} fill="url(#sparkline-fill)" />
       <polyline
         points={points}
         fill="none"
-        stroke="rgb(16, 185, 129)"
+        stroke="rgb(87, 87, 87)"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -156,7 +156,7 @@ const Sparkline = ({ data, className }: { data: number[]; className?: string }) 
 const typeColors = {
   warning: 'bg-amber-500',
   info: 'bg-blue-500',
-  success: 'bg-emerald-500',
+  success: 'bg-foreground',
 };
 
 const statusBadgeVariants = {
@@ -172,7 +172,7 @@ const statusLabels = {
 const equipmentStatusConfig = {
   rented: {
     label: 'مؤجر',
-    color: 'text-emerald-700 bg-emerald-100 dark:bg-emerald-900/50 dark:text-emerald-300',
+    color: 'text-foreground bg-muted dark:bg-muted dark:text-foreground',
     icon: <CheckCircle2 className="h-4 w-4" />,
   },
   available: {
@@ -246,19 +246,19 @@ export default function OverviewPage() {
         {/* Card 2: Financial Impact */}
         <div className={cn(glassCardClass, 'p-6')}>
           <div className="mb-4 flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/50">
-              <BarChart3 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted dark:bg-muted">
+              <BarChart3 className="h-5 w-5 text-foreground dark:text-foreground" />
             </div>
             <h3 className="text-base font-semibold text-foreground">الأثر المالي</h3>
           </div>
           <div className="mb-2">
-            <p className="font-numbers text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+            <p className="font-numbers text-2xl font-bold text-foreground dark:text-foreground">
               {formatCurrency(45000000)}
             </p>
             <p className="text-sm text-muted-foreground">إجمالي التوفير</p>
           </div>
           <Sparkline data={sparklineData} className="mb-3" />
-          <div className="flex items-center gap-1 text-sm text-emerald-600 dark:text-emerald-400">
+          <div className="flex items-center gap-1 text-sm text-foreground dark:text-foreground">
             <TrendingUp className="h-4 w-4" />
             <span className="font-numbers">15%</span>
             <span className="text-muted-foreground">من الشهر الماضي</span>
@@ -310,7 +310,7 @@ export default function OverviewPage() {
               className={cn(
                 'relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors',
                 activeTab === 'sourcing'
-                  ? 'text-emerald-600 dark:text-emerald-400'
+                  ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -319,7 +319,7 @@ export default function OverviewPage() {
               {activeTab === 'sourcing' && (
                 <motion.div
                   layoutId="tab-underline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground"
                 />
               )}
             </button>
@@ -328,7 +328,7 @@ export default function OverviewPage() {
               className={cn(
                 'relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors',
                 activeTab === 'capacity'
-                  ? 'text-emerald-600 dark:text-emerald-400'
+                  ? 'text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -337,7 +337,7 @@ export default function OverviewPage() {
               {activeTab === 'capacity' && (
                 <motion.div
                   layoutId="tab-underline"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground"
                 />
               )}
             </button>
@@ -364,7 +364,7 @@ export default function OverviewPage() {
                       </p>
                     </div>
                     <div className="text-left">
-                      <span className="font-numbers text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                      <span className="font-numbers text-lg font-bold text-foreground">
                         {deal.saving}%
                       </span>
                       <p className="text-xs text-muted-foreground">توفير</p>
@@ -409,7 +409,7 @@ export default function OverviewPage() {
                     </div>
                     {equipment.status === 'rented' && equipment.earnings && (
                       <div className="text-left">
-                        <span className="font-numbers font-semibold text-emerald-600 dark:text-emerald-400">
+                        <span className="font-numbers font-semibold text-foreground">
                           {formatCurrency(equipment.earnings)}
                         </span>
                         <p className="text-xs text-muted-foreground">إيرادات</p>
@@ -419,19 +419,19 @@ export default function OverviewPage() {
                 );
               })}
               {/* Summary Card */}
-              <div className="rounded-xl bg-emerald-50 p-4 dark:bg-emerald-900/30">
+              <div className="rounded-xl bg-muted p-4 dark:bg-muted">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                    <p className="text-sm text-muted-foreground">
                       إيرادات هذا الشهر
                     </p>
-                    <p className="font-numbers text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                    <p className="font-numbers text-xl font-bold text-foreground">
                       {formatCurrency(totalEquipmentEarnings)}
                     </p>
                   </div>
                   <div className="text-left">
-                    <p className="text-sm text-emerald-700 dark:text-emerald-300">معدات مؤجرة</p>
-                    <p className="font-numbers text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                    <p className="text-sm text-muted-foreground">معدات مؤجرة</p>
+                    <p className="font-numbers text-xl font-bold text-foreground">
                       {rentedCount}
                     </p>
                   </div>
@@ -502,8 +502,8 @@ export default function OverviewPage() {
               </div>
               <div className="flex items-center gap-1">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/50 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground" />
                 </span>
                 <span className="text-xs text-muted-foreground">مباشر</span>
               </div>
@@ -523,7 +523,7 @@ export default function OverviewPage() {
                       className={cn(
                         'flex items-center gap-0.5 text-xs font-medium',
                         ticker.trend === 'up'
-                          ? 'text-emerald-600 dark:text-emerald-400'
+                          ? 'text-foreground'
                           : 'text-red-600 dark:text-red-400'
                       )}
                     >

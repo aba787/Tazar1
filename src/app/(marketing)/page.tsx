@@ -29,7 +29,7 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen">
       {/* Section 1: Hero */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-b from-background to-muted">
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="secondary" className="mb-6 px-4 py-2 text-base">
             منصة سعودية 100% للقطاع الصناعي
@@ -299,7 +299,7 @@ export default function LandingPage() {
       <section className="py-20 px-4 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <Badge variant="success" className="mb-4">
+            <Badge variant="secondary" className="mb-4">
               ابدأ مجاناً - لا حاجة لبطاقة ائتمان
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">خطط تناسب جميع أحجام المصانع</h2>
@@ -321,7 +321,7 @@ export default function LandingPage() {
                   'دعم عبر البريد الإلكتروني',
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-success flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -350,7 +350,7 @@ export default function LandingPage() {
                   'دعم أولوية 24/7',
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-success flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -377,7 +377,7 @@ export default function LandingPage() {
                   'تدريب وإعداد مخصص',
                 ].map((feature, i) => (
                   <li key={i} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-success flex-shrink-0" />
+                    <Check className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}

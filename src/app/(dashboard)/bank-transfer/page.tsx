@@ -21,11 +21,10 @@ import { createClient } from '@/lib/supabase/client';
 
 const BANK_INFO = {
   bankName: 'البنك الأهلي السعودي (SNB)',
-  iban: 'SA8410000001400035419004', // الآيبان المستخرج من الرسالة
+  iban: 'SA8410000001400035419004',
   accountNumber: '01400035419004',
   swiftCode: 'NCBKSAJE',
-  beneficiary: '', // تركتها فارغة لتعبئتها عند الحاجة
-  amount: null,    // يمكن للمستخدم إدخال أي مبلغ يريده هنا
+  beneficiary: 'منصة تآزر الصناعية',
 };
 const statusLabels: Record<string, string> = {
   pending: 'قيد المراجعة',
@@ -110,6 +109,14 @@ export default function BankTransferPage() {
     const senderName = formData.get('senderName') as string;
     const referenceNumber = formData.get('referenceNumber') as string;
     const transferDate = formData.get('transferDate') as string;
+    const amountStr = formData.get('amount') as string;
+    const amount = parseFloat(amountStr);
+
+    if (!amount || amount <= 0) {
+      setFormError('يرجى إدخال مبلغ صحيح');
+      setSubmitting(false);
+      return;
+    }
 
     if (!receiptFile) {
       setFormError('يرجى رفع صورة الإيصال');
@@ -145,7 +152,7 @@ export default function BankTransferPage() {
       setUploadProgress(false);
 
       const result = await createBankTransfer({
-        amount: BANK_INFO.amount,
+        amount,
         senderName,
         referenceNumber,
         transferDate,
@@ -168,7 +175,7 @@ export default function BankTransferPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     );
   }
@@ -181,7 +188,7 @@ export default function BankTransferPage() {
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-muted text-foreground mb-6">
             <CheckCircle className="h-10 w-10" />
           </div>
           <h1 className="text-2xl font-bold mb-4">تم استلام طلبك</h1>
@@ -213,10 +220,10 @@ export default function BankTransferPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30 border border-emerald-200 dark:border-emerald-800"
+            className="p-6 rounded-2xl bg-gradient-to-br from-muted to-accent dark:from-muted dark:to-accent border border-border"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-foreground text-background flex items-center justify-center">
                 <Building2 className="h-5 w-5" />
               </div>
               <h2 className="text-lg font-bold">بيانات الحساب البنكي</h2>
@@ -243,11 +250,10 @@ export default function BankTransferPage() {
                 copied={copied === 'name'}
               />
               <InfoRow
-                label="المبلغ المطلوب"
-                value={`${BANK_INFO.amount.toLocaleString('ar-SA')} ريال`}
-                onCopy={() => copyToClipboard(BANK_INFO.amount.toString(), 'amount')}
-                copied={copied === 'amount'}
-                highlight
+                label="المستفيد"
+                value={BANK_INFO.beneficiary}
+                onCopy={() => copyToClipboard(BANK_INFO.beneficiary, 'beneficiary')}
+                copied={copied === 'beneficiary'}
               />
             </div>
           </motion.div>
@@ -275,7 +281,7 @@ export default function BankTransferPage() {
           transition={{ delay: 0.2 }}
         >
           {hasPendingTransfer ? (
-            <div className="p-6 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-center">
+            <div className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border text-center">
               <Clock className="h-12 w-12 text-amber-500 mx-auto mb-4" />
               <h3 className="text-lg font-bold mb-2">طلب قيد المراجعة</h3>
               <p className="text-muted-foreground text-sm">
@@ -283,9 +289,9 @@ export default function BankTransferPage() {
               </p>
             </div>
           ) : (
-            <div className="p-6 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+            <div className="p-6 rounded-2xl bg-card/80 backdrop-blur-sm border border-border">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-foreground text-background flex items-center justify-center">
                   <FileText className="h-5 w-5" />
                 </div>
                 <h2 className="text-lg font-bold">رفع إيصال التحويل</h2>
@@ -304,13 +310,27 @@ export default function BankTransferPage() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
+                  <label className="text-sm font-medium">مبلغ التحويل (ريال)</label>
+                  <input
+                    type="number"
+                    name="amount"
+                    placeholder="أدخل المبلغ المحول"
+                    required
+                    min="1"
+                    step="0.01"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background backdrop-blur-sm focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 transition-all text-sm"
+                    dir="ltr"
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <label className="text-sm font-medium">اسم المحول</label>
                   <input
                     type="text"
                     name="senderName"
                     placeholder="الاسم كما يظهر في الحوالة"
                     required
-                    className="w-full h-11 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background backdrop-blur-sm focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 transition-all text-sm"
                   />
                 </div>
 
@@ -321,7 +341,7 @@ export default function BankTransferPage() {
                     name="referenceNumber"
                     placeholder="رقم المرجع من البنك"
                     required
-                    className="w-full h-11 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background backdrop-blur-sm focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 transition-all text-sm"
                     dir="ltr"
                   />
                 </div>
@@ -333,7 +353,7 @@ export default function BankTransferPage() {
                     name="transferDate"
                     required
                     max={new Date().toISOString().split('T')[0]}
-                    className="w-full h-11 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all text-sm"
+                    className="w-full h-11 px-4 rounded-xl border border-border bg-background backdrop-blur-sm focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 transition-all text-sm"
                   />
                 </div>
 
@@ -341,7 +361,7 @@ export default function BankTransferPage() {
                   <label className="text-sm font-medium">صورة الإيصال</label>
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center cursor-pointer hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 transition-all"
+                    className="border-2 border-dashed border-border rounded-xl p-6 text-center cursor-pointer hover:border-foreground/50 hover:bg-muted/50 transition-all"
                   >
                     {receiptPreview ? (
                       <div className="space-y-3">
@@ -350,15 +370,15 @@ export default function BankTransferPage() {
                           alt="معاينة الإيصال"
                           className="max-h-40 mx-auto rounded-lg object-contain"
                         />
-                        <p className="text-sm text-emerald-600 font-medium">
+                        <p className="text-sm text-foreground font-medium">
                           {receiptFile?.name}
                         </p>
                         <p className="text-xs text-muted-foreground">انقر لتغيير الصورة</p>
                       </div>
                     ) : receiptFile ? (
                       <div className="space-y-2">
-                        <FileText className="h-10 w-10 text-emerald-600 mx-auto" />
-                        <p className="text-sm text-emerald-600 font-medium">{receiptFile.name}</p>
+                        <FileText className="h-10 w-10 text-foreground mx-auto" />
+                        <p className="text-sm text-foreground font-medium">{receiptFile.name}</p>
                         <p className="text-xs text-muted-foreground">انقر لتغيير الملف</p>
                       </div>
                     ) : (
@@ -413,11 +433,11 @@ export default function BankTransferPage() {
           className="space-y-4"
         >
           <h2 className="text-lg font-bold">سجل التحويلات</h2>
-          <div className="rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="rounded-2xl bg-card/80 backdrop-blur-sm border border-border overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200 dark:border-gray-700">
+                  <tr className="border-b border-border">
                     <th className="text-right text-sm font-medium text-muted-foreground p-4">التاريخ</th>
                     <th className="text-right text-sm font-medium text-muted-foreground p-4">المبلغ</th>
                     <th className="text-right text-sm font-medium text-muted-foreground p-4">رقم المرجع</th>
@@ -426,7 +446,7 @@ export default function BankTransferPage() {
                 </thead>
                 <tbody>
                   {transfers.map((transfer) => (
-                    <tr key={transfer.id} className="border-b border-gray-100 dark:border-gray-800 last:border-0">
+                    <tr key={transfer.id} className="border-b border-border/50 last:border-0">
                       <td className="p-4 text-sm">
                         {new Date(transfer.created_at).toLocaleDateString('ar-SA')}
                       </td>
@@ -472,11 +492,11 @@ function InfoRow({
   highlight?: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 p-3 rounded-xl bg-white/60 dark:bg-gray-800/60">
+    <div className="flex items-center justify-between gap-4 p-3 rounded-xl bg-card/60 dark:bg-card/60">
       <div className="min-w-0">
         <p className="text-xs text-muted-foreground mb-0.5">{label}</p>
         <p
-          className={`text-sm font-semibold truncate ${highlight ? 'text-emerald-700 dark:text-emerald-400 text-lg' : ''}`}
+          className={`text-sm font-semibold truncate ${highlight ? 'text-foreground text-lg' : ''}`}
           dir={dir}
         >
           {value}
@@ -484,11 +504,11 @@ function InfoRow({
       </div>
       <button
         onClick={onCopy}
-        className="shrink-0 p-2 rounded-lg hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
+        className="shrink-0 p-2 rounded-lg hover:bg-muted transition-colors"
         title="نسخ"
       >
         {copied ? (
-          <CheckCircle className="h-4 w-4 text-emerald-600" />
+          <CheckCircle className="h-4 w-4 text-foreground" />
         ) : (
           <Copy className="h-4 w-4 text-muted-foreground" />
         )}

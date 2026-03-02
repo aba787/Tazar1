@@ -121,7 +121,7 @@ export default function FactoryDetailsPage({
   if (loading) {
     return (
       <div className="p-8 text-center">
-        <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <div className="w-8 h-8 border-2 border-gray-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
         <p className="text-gray-500 dark:text-gray-400">جاري التحميل...</p>
       </div>
     );
@@ -134,7 +134,7 @@ export default function FactoryDetailsPage({
         <p className="text-gray-500 dark:text-gray-400">المصنع غير موجود</p>
         <Link
           href="/admin/factories"
-          className="mt-4 inline-block text-emerald-600 hover:underline"
+          className="mt-4 inline-block text-foreground font-medium hover:underline"
         >
           العودة للقائمة
         </Link>
@@ -208,7 +208,7 @@ export default function FactoryDetailsPage({
           {/* Basic Info Card */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-              <Building2 className="h-5 w-5 text-emerald-600" />
+              <Building2 className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               البيانات الأساسية
             </h2>
 
@@ -245,7 +245,7 @@ export default function FactoryDetailsPage({
           {/* Contact Info Card */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-              <Phone className="h-5 w-5 text-emerald-600" />
+              <Phone className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               معلومات التواصل
             </h2>
 
@@ -308,7 +308,7 @@ export default function FactoryDetailsPage({
           {/* Documents */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-              <FileText className="h-5 w-5 text-emerald-600" />
+              <FileText className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               الوثائق المرفقة
             </h2>
 
@@ -352,7 +352,7 @@ export default function FactoryDetailsPage({
           {/* Timeline */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
-              <Calendar className="h-5 w-5 text-emerald-600" />
+              <Calendar className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               التسلسل الزمني
             </h2>
 
@@ -406,7 +406,7 @@ export default function FactoryDetailsPage({
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="سبب الرفض..."
               rows={4}
-              className="w-full p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
             <div className="flex gap-3 mt-4">
               <Button

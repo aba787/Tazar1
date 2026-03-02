@@ -303,7 +303,7 @@ export default function OnboardingPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -337,25 +337,25 @@ export default function OnboardingPage() {
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-muted-foreground">البيانات الأساسية</span>
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-primary" />
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-muted-foreground">الموقع والتواصل</span>
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-primary" />
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-muted-foreground">القدرات الإنتاجية</span>
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-primary" />
               </div>
               <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800/50">
                 <span className="text-sm text-muted-foreground">الوثائق الرسمية</span>
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <CheckCircle2 className="h-5 w-5 text-primary" />
               </div>
             </div>
 
             <p className="text-sm text-muted-foreground mt-6">
               لديك استفسار؟ تواصل معنا على{' '}
-              <a href="mailto:support@takamul.sa" className="text-emerald-600 hover:underline">
+              <a href="mailto:support@takamul.sa" className="text-primary hover:underline">
                 support@takamul.sa
               </a>
             </p>
@@ -372,7 +372,7 @@ export default function OnboardingPage() {
         <div className="max-w-4xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-black to-[#575757] flex items-center justify-center text-white">
                 <Factory className="h-5 w-5" />
               </div>
               <div>
@@ -380,7 +380,7 @@ export default function OnboardingPage() {
                 <p className="text-sm text-muted-foreground">أكمل البيانات للانضمام للمنصة</p>
               </div>
             </div>
-            <div className="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium">
+            <div className="px-3 py-1.5 rounded-full bg-muted text-foreground text-sm font-medium">
               الخطوة {currentStep} من 4
             </div>
           </div>
@@ -397,9 +397,9 @@ export default function OnboardingPage() {
                 flex items-center gap-2 px-4 py-2 rounded-full transition-all
                 ${
                   currentStep === step.id
-                    ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
+                    ? 'bg-muted text-foreground'
                     : currentStep > step.id
-                      ? 'bg-emerald-500 text-white'
+                      ? 'bg-primary text-primary-foreground'
                       : 'bg-gray-100 dark:bg-gray-800 text-muted-foreground'
                 }
               `}
@@ -410,7 +410,7 @@ export default function OnboardingPage() {
               {index < STEPS.length - 1 && (
                 <div
                   className={`w-8 sm:w-16 h-0.5 mx-2 ${
-                    currentStep > step.id ? 'bg-emerald-500' : 'bg-gray-200 dark:bg-gray-700'
+                    currentStep > step.id ? 'bg-primary' : 'bg-gray-200 dark:bg-gray-700'
                   }`}
                 />
               )}
@@ -463,7 +463,7 @@ export default function OnboardingPage() {
                       value={formData.factoryName}
                       onChange={(e) => setFormData({ ...formData, factoryName: e.target.value })}
                       placeholder="مثال: مصنع النور للألمنيوم"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -475,7 +475,7 @@ export default function OnboardingPage() {
                       onChange={(e) => setFormData({ ...formData, factoryNameEn: e.target.value })}
                       placeholder="Example: Al Noor Aluminum Factory"
                       dir="ltr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -495,7 +495,7 @@ export default function OnboardingPage() {
                       placeholder="1234567890"
                       maxLength={10}
                       dir="ltr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                     <p className="text-xs text-muted-foreground mt-1">10 أرقام</p>
                   </div>
@@ -514,7 +514,7 @@ export default function OnboardingPage() {
                       placeholder="300000000000003"
                       maxLength={15}
                       dir="ltr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -528,7 +528,7 @@ export default function OnboardingPage() {
                       min="1950"
                       max={new Date().getFullYear()}
                       dir="ltr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -537,7 +537,7 @@ export default function OnboardingPage() {
                     <select
                       value={formData.employeeCount}
                       onChange={(e) => setFormData({ ...formData, employeeCount: e.target.value })}
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
                       <option value="">اختر...</option>
                       <option value="10">1-10</option>
@@ -575,7 +575,7 @@ export default function OnboardingPage() {
                     <select
                       value={formData.city}
                       onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
                       <option value="">اختر المدينة...</option>
                       {SAUDI_CITIES.map((city) => (
@@ -595,7 +595,7 @@ export default function OnboardingPage() {
                       value={formData.district}
                       onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                       placeholder="المنطقة الصناعية الثانية"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -608,7 +608,7 @@ export default function OnboardingPage() {
                       value={formData.street}
                       onChange={(e) => setFormData({ ...formData, street: e.target.value })}
                       placeholder="شارع الملك فهد، مبنى رقم 15"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -626,7 +626,7 @@ export default function OnboardingPage() {
                       placeholder="12345"
                       maxLength={5}
                       dir="ltr"
-                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                      className="w-full h-12 px-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     />
                   </div>
 
@@ -647,7 +647,7 @@ export default function OnboardingPage() {
                         }
                         placeholder="05XXXXXXXX"
                         dir="ltr"
-                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       />
                     </div>
                   </div>
@@ -664,7 +664,7 @@ export default function OnboardingPage() {
                         onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
                         placeholder="info@factory.com"
                         dir="ltr"
-                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       />
                     </div>
                   </div>
@@ -679,7 +679,7 @@ export default function OnboardingPage() {
                         onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                         placeholder="https://www.factory.com"
                         dir="ltr"
-                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                        className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       />
                     </div>
                   </div>
@@ -722,14 +722,14 @@ export default function OnboardingPage() {
                           p-4 rounded-xl border-2 text-right transition-all
                           ${
                             formData.categories.includes(category)
-                              ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
-                              : 'border-gray-200 dark:border-gray-700 hover:border-emerald-300'
+                              ? 'border-primary bg-muted'
+                              : 'border-gray-200 dark:border-gray-700 hover:border-primary/50'
                           }
                         `}
                       >
                         <span className="text-sm font-medium">{INDUSTRY_LABELS[category]}</span>
                         {formData.categories.includes(category) && (
-                          <Check className="inline-block mr-2 h-4 w-4 text-emerald-600" />
+                          <Check className="inline-block mr-2 h-4 w-4 text-primary" />
                         )}
                       </button>
                     ))}
@@ -746,7 +746,7 @@ export default function OnboardingPage() {
                     placeholder="اكتب وصفاً مختصراً عن مصنعك، المنتجات الرئيسية، والقدرات الإنتاجية..."
                     rows={4}
                     maxLength={500}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                   />
                   <p className="text-xs text-muted-foreground mt-1">{formData.description.length}/500 حرف</p>
                 </div>
@@ -904,7 +904,7 @@ function DocumentUploadCard({
           <div
             className={`
             w-10 h-10 rounded-lg flex items-center justify-center
-            ${document ? 'bg-emerald-100 text-emerald-600' : 'bg-gray-100 text-gray-400'}
+            ${document ? 'bg-muted text-primary' : 'bg-gray-100 text-gray-400'}
           `}
           >
             <FileText className="h-5 w-5" />
@@ -915,7 +915,7 @@ function DocumentUploadCard({
               {required && <span className="text-red-500 mr-1">*</span>}
             </p>
             {document ? (
-              <p className="text-sm text-emerald-600">{document.fileName}</p>
+              <p className="text-sm text-primary">{document.fileName}</p>
             ) : (
               <p className="text-sm text-muted-foreground">PDF أو صورة (حد أقصى 5MB)</p>
             )}
@@ -924,7 +924,7 @@ function DocumentUploadCard({
 
         {document ? (
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+            <CheckCircle2 className="h-5 w-5 text-primary" />
             <button
               type="button"
               onClick={onRemove}
@@ -948,7 +948,7 @@ function DocumentUploadCard({
               ${
                 isUploading
                   ? 'bg-gray-100 text-gray-400'
-                  : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                  : 'bg-muted text-foreground hover:bg-accent'
               }
             `}
             >

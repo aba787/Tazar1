@@ -32,12 +32,11 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       lg: 'h-4',
     };
 
-    // Apple Green (#34C759) - لون واحد موحد لجميع Progress Bars
     const variantClasses = {
-      default: 'bg-[#34C759]',
-      success: 'bg-[#34C759]',
-      warning: 'bg-[#34C759]',
-      danger: 'bg-[#34C759]',
+      default: 'bg-foreground',
+      success: 'bg-foreground',
+      warning: 'bg-muted-foreground',
+      danger: 'bg-destructive',
     };
 
     return (
@@ -49,7 +48,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuemax={max}
           aria-valuenow={value}
           className={cn(
-            'w-full overflow-hidden rounded-full bg-[#F2F2F7] dark:bg-[#2C2C2E]',
+            'w-full overflow-hidden rounded-full bg-muted dark:bg-muted',
             sizeClasses[size],
             className
           )}

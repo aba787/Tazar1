@@ -694,8 +694,8 @@ export const DEAL_STATUS_COLORS: Record<DealStatus, string> = {
   awarded: 'bg-blue-100 text-blue-700',
   in_production: 'bg-blue-100 text-blue-700',
   shipping: 'bg-blue-100 text-blue-700',
-  delivered: 'bg-emerald-100 text-emerald-700',
-  completed: 'bg-emerald-100 text-emerald-700',
+  delivered: 'bg-gray-200 text-gray-700',
+  completed: 'bg-gray-200 text-gray-700',
   cancelled: 'bg-red-100 text-red-700',
 };
 
@@ -704,7 +704,7 @@ export type DealLifecycle = 'upcoming' | 'available' | 'ended';
 export const DEAL_LIFECYCLE_COLORS: Record<DealLifecycle, string> = {
   upcoming: 'bg-[#2563EB] text-white',
   available: 'bg-[#F59E0B] text-white',
-  ended: 'bg-[#10B981] text-white',
+  ended: 'bg-[#575757] text-white',
 };
 
 export const DEAL_LIFECYCLE_LABELS: Record<DealLifecycle, string> = {

@@ -37,9 +37,9 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       aria-label={isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن'}
     >
       {isDark ? (
-        <Sun className="h-5 w-5 text-yellow-400" />
+        <Sun className="h-5 w-5 text-foreground" />
       ) : (
-        <Moon className="h-5 w-5 text-slate-700" />
+        <Moon className="h-5 w-5 text-foreground" />
       )}
     </button>
   );

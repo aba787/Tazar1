@@ -291,10 +291,10 @@ function ProcurementDealCard({ deal, onJoin, onViewDetails }: DealCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-gray-200 transition-all"
+      className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-lg hover:border-border/80 transition-all"
     >
       {/* Header */}
-      <div className="p-4 border-b border-gray-50">
+      <div className="p-4 border-b border-border/50">
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -310,41 +310,41 @@ function ProcurementDealCard({ deal, onJoin, onViewDetails }: DealCardProps) {
                 </span>
               )}
             </div>
-            <h3 className="font-bold text-gray-900 line-clamp-1">{deal.title}</h3>
+            <h3 className="font-bold text-foreground line-clamp-1">{deal.title}</h3>
           </div>
         </div>
-        <p className="text-sm text-gray-500 line-clamp-2">{deal.description}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">{deal.description}</p>
       </div>
 
       {/* Tier Preview */}
-      <div className="p-4 bg-gradient-to-l from-gray-50 to-white">
+      <div className="p-4 bg-gradient-to-l from-muted to-card">
         <SmartAggregator data={aggregatorData} compact />
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-2 p-4 border-t border-gray-50">
+      <div className="grid grid-cols-3 gap-2 p-4 border-t border-border/50">
         <div className="text-center">
-          <div className="flex items-center justify-center gap-1 text-gray-500 mb-1">
+          <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
             <Users className="w-3.5 h-3.5" />
           </div>
-          <p className="text-sm font-bold text-gray-900">{participantCount}</p>
-          <p className="text-[10px] text-gray-400">مشارك</p>
+          <p className="text-sm font-bold text-foreground">{participantCount}</p>
+          <p className="text-[10px] text-muted-foreground">مشارك</p>
         </div>
         <div className="text-center">
-          <div className="flex items-center justify-center gap-1 text-gray-500 mb-1">
+          <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
             <Package className="w-3.5 h-3.5" />
           </div>
-          <p className="text-sm font-bold text-gray-900">{formatNumber(deal.currentQuantity)}</p>
-          <p className="text-[10px] text-gray-400">{deal.unit}</p>
+          <p className="text-sm font-bold text-foreground">{formatNumber(deal.currentQuantity)}</p>
+          <p className="text-[10px] text-muted-foreground">{deal.unit}</p>
         </div>
         <div className="text-center">
-          <div className="flex items-center justify-center gap-1 text-gray-500 mb-1">
+          <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
             <Clock className="w-3.5 h-3.5" />
           </div>
-          <p className="text-sm font-bold text-gray-900">
+          <p className="text-sm font-bold text-foreground">
             {timeRemaining ? `${timeRemaining.days}` : '-'}
           </p>
-          <p className="text-[10px] text-gray-400">يوم متبقي</p>
+          <p className="text-[10px] text-muted-foreground">يوم متبقي</p>
         </div>
       </div>
 
@@ -476,8 +476,8 @@ export default function GroupBuyingPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">الشراء الاستراتيجي</h1>
-          <p className="text-gray-500">
+          <h1 className="text-2xl font-bold text-foreground">الشراء الاستراتيجي</h1>
+          <p className="text-muted-foreground">
             صفقات شراء جماعي مع شرائح تسعير ذكية وضمان مالي
           </p>
         </div>
@@ -489,59 +489,59 @@ export default function GroupBuyingPage() {
 
       {/* Stats Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="bg-white">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100">
-              <Package className="h-6 w-6 text-emerald-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <Package className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.activeDeals}</p>
-              <p className="text-sm text-gray-500">صفقة نشطة</p>
+              <p className="text-sm text-muted-foreground">صفقة نشطة</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
-              <BarChart3 className="h-6 w-6 text-blue-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <BarChart3 className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{formatNumber(stats.totalVolume)}</p>
-              <p className="text-sm text-gray-500">إجمالي الكميات</p>
+              <p className="text-sm text-muted-foreground">إجمالي الكميات</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100">
-              <TrendingDown className="h-6 w-6 text-amber-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <TrendingDown className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.avgSavings}%</p>
-              <p className="text-sm text-gray-500">متوسط التوفير</p>
+              <p className="text-sm text-muted-foreground">متوسط التوفير</p>
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100">
-              <Gavel className="h-6 w-6 text-purple-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <Gavel className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.activeBids}</p>
-              <p className="text-sm text-gray-500">طلب عروض مفتوح</p>
+              <p className="text-sm text-muted-foreground">طلب عروض مفتوح</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Filters */}
-      <Card className="bg-white">
+      <Card className="bg-card">
         <CardContent className="p-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="ابحث عن صفقة..."
                 value={searchQuery}
@@ -559,8 +559,8 @@ export default function GroupBuyingPage() {
                   className={cn(
                     'flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium transition-all',
                     categoryFilter === filter.value
-                      ? 'bg-emerald-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-foreground text-background'
+                      : 'bg-muted text-muted-foreground hover:bg-accent'
                   )}
                 >
                   {filter.icon}
@@ -571,11 +571,11 @@ export default function GroupBuyingPage() {
 
             {/* Status Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-gray-400" />
+              <Filter className="w-4 h-4 text-muted-foreground" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-                className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 bg-background"
               >
                 {statusFilters.map((filter) => (
                   <option key={filter.value} value={filter.value}>
@@ -604,10 +604,10 @@ export default function GroupBuyingPage() {
 
       {/* Empty State */}
       {filteredDeals.length === 0 && (
-        <Card className="p-12 text-center bg-white">
-          <Package className="mx-auto h-12 w-12 text-gray-300" />
-          <h3 className="mt-4 text-lg font-semibold text-gray-900">لا توجد صفقات</h3>
-          <p className="mt-2 text-gray-500">
+        <Card className="p-12 text-center bg-card">
+          <Package className="mx-auto h-12 w-12 text-muted-foreground/50" />
+          <h3 className="mt-4 text-lg font-semibold text-foreground">لا توجد صفقات</h3>
+          <p className="mt-2 text-muted-foreground">
             لم يتم العثور على صفقات تطابق معايير البحث
           </p>
           <Button className="mt-4">
@@ -629,17 +629,17 @@ export default function GroupBuyingPage() {
               onClick={() => setViewingDeal(null)}
             />
             <motion.div
-              className="fixed inset-y-0 left-0 z-50 w-full max-w-lg bg-white dark:bg-gray-900 shadow-2xl overflow-y-auto"
+              className="fixed inset-y-0 left-0 z-50 w-full max-w-lg bg-card shadow-2xl overflow-y-auto"
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             >
-              <div className="sticky top-0 z-10 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+              <div className="sticky top-0 z-10 bg-card/90 backdrop-blur-lg border-b border-border px-6 py-4 flex items-center justify-between">
                 <h2 className="text-lg font-bold">تفاصيل الصفقة</h2>
                 <button
                   onClick={() => setViewingDeal(null)}
-                  className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-accent transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -658,19 +658,19 @@ export default function GroupBuyingPage() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <div className="p-4 rounded-xl bg-muted">
                     <p className="text-xs text-muted-foreground mb-1">الكمية الحالية</p>
                     <p className="text-lg font-bold">{viewingDeal.currentQuantity.toLocaleString('ar-SA')} {viewingDeal.unit}</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <div className="p-4 rounded-xl bg-muted">
                     <p className="text-xs text-muted-foreground mb-1">الكمية المستهدفة</p>
                     <p className="text-lg font-bold">{(viewingDeal.maxQuantity || viewingDeal.minQuantity).toLocaleString('ar-SA')} {viewingDeal.unit}</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <div className="p-4 rounded-xl bg-muted">
                     <p className="text-xs text-muted-foreground mb-1">المشاركون</p>
                     <p className="text-lg font-bold">{viewingDeal.participations.length} مصنع</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <div className="p-4 rounded-xl bg-muted">
                     <p className="text-xs text-muted-foreground mb-1">سعر السوق</p>
                     <p className="text-lg font-bold">{viewingDeal.marketPricePerUnit > 0 ? formatCurrency(viewingDeal.marketPricePerUnit) : 'غير متوفر'}</p>
                   </div>
@@ -688,19 +688,19 @@ export default function GroupBuyingPage() {
                           className={cn(
                             'flex items-center justify-between p-3 rounded-xl border transition-all',
                             isCurrentTier
-                              ? 'border-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 dark:border-emerald-700'
-                              : 'border-gray-200 dark:border-gray-700'
+                              ? 'border-foreground/30 bg-muted'
+                              : 'border-border'
                           )}
                         >
                           <div className="flex items-center gap-2">
-                            {isCurrentTier && <CheckCircle className="h-4 w-4 text-emerald-500" />}
+                            {isCurrentTier && <CheckCircle className="h-4 w-4 text-foreground" />}
                             <span className="font-medium text-sm">{tier.tierLabel}</span>
                           </div>
                           <div className="text-left">
                             <span className="font-bold">{formatCurrency(tier.pricePerUnit)}</span>
                             <span className="text-xs text-muted-foreground mr-1">/{viewingDeal.unit}</span>
                             {tier.discountPercentage > 0 && (
-                              <span className="text-xs text-emerald-600 mr-2">-{tier.discountPercentage}%</span>
+                              <span className="text-xs text-foreground font-medium mr-2">-{tier.discountPercentage}%</span>
                             )}
                           </div>
                         </div>
@@ -711,9 +711,9 @@ export default function GroupBuyingPage() {
 
                 <div>
                   <h4 className="font-semibold mb-2">التقدم</h4>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                  <div className="w-full bg-muted rounded-full h-3">
                     <div
-                      className="bg-emerald-500 h-3 rounded-full transition-all duration-500"
+                      className="bg-foreground h-3 rounded-full transition-all duration-500"
                       style={{ width: `${Math.min(100, (viewingDeal.currentQuantity / (viewingDeal.maxQuantity || viewingDeal.minQuantity)) * 100)}%` }}
                     />
                   </div>
@@ -733,7 +733,7 @@ export default function GroupBuyingPage() {
                   </div>
                 )}
 
-                <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex gap-3 pt-4 border-t border-border">
                   <Button
                     className="flex-1"
                     onClick={() => {

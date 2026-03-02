@@ -56,7 +56,7 @@ export default function AdminSidebar() {
       {/* Logo */}
       <div className="flex items-center justify-between p-6 border-b border-gray-800">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-black dark:bg-white flex items-center justify-center">
             <Shield className="h-6 w-6" />
           </div>
           <div>
@@ -71,7 +71,7 @@ export default function AdminSidebar() {
             title={isDark ? 'الوضع الفاتح' : 'الوضع الداكن'}
           >
             {isDark ? (
-              <Sun className="h-5 w-5 text-yellow-400" />
+              <Sun className="h-5 w-5 text-gray-300" />
             ) : (
               <Moon className="h-5 w-5 text-gray-300" />
             )}
@@ -94,7 +94,7 @@ export default function AdminSidebar() {
                 flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
                 ${
                   isActive
-                    ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20'
+                    ? 'bg-black dark:bg-white text-white dark:text-black shadow-lg shadow-black/20'
                     : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }
               `}

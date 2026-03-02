@@ -112,7 +112,7 @@ export default async function AdminDashboardPage() {
           </h2>
           <Link
             href="/admin/factories?status=submitted"
-            className="text-sm text-emerald-600 hover:underline"
+            className="text-sm text-foreground font-medium hover:underline"
           >
             عرض الكل
           </Link>
@@ -120,7 +120,7 @@ export default async function AdminDashboardPage() {
 
         {pendingFactories.length === 0 ? (
           <div className="p-8 text-center text-gray-500 dark:text-gray-400">
-            <CheckCircle className="h-12 w-12 mx-auto mb-3 text-green-500" />
+            <CheckCircle className="h-12 w-12 mx-auto mb-3 text-gray-500" />
             <p>لا توجد طلبات منتظرة</p>
           </div>
         ) : (
@@ -150,7 +150,7 @@ export default async function AdminDashboardPage() {
                   </Badge>
                   <Link
                     href={`/admin/factories/${factory.id}`}
-                    className="px-3 py-1 text-sm bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors"
+                    className="px-3 py-1 text-sm bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                   >
                     مراجعة
                   </Link>
@@ -289,9 +289,9 @@ function QuickActionCard({
   return (
     <Link
       href={href}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-emerald-300 dark:hover:border-emerald-700 transition-all group"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md hover:border-gray-400 dark:hover:border-gray-500 transition-all group"
     >
-      <Icon className="h-8 w-8 text-gray-400 group-hover:text-emerald-500 transition-colors mb-3" />
+      <Icon className="h-8 w-8 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors mb-3" />
       <h3 className="font-medium text-gray-900 dark:text-white">{title}</h3>
       <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
     </Link>

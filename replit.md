@@ -4,6 +4,15 @@
 Ta'azur (تآزر) is an industrial synergy platform connecting Saudi SME factories for group buying and capacity exchange. Built with Next.js 16, React 19, TypeScript, and Supabase.
 
 ## Recent Changes
+- **2026-03-02**: Complete brand color audit and theme consistency pass
+  - Replaced all emerald/green branding colors with neutral black/gray palette across entire platform
+  - Brand colors: black=#000000, dark gray=#575757, light gray=#E6E6E6, bg=#F2F2F2
+  - Updated: auth pages, dashboard pages, admin pages, onboarding, feature components, UI components
+  - Fixed bank-transfer page: added amount input field, fixed null type error
+  - Added allowedDevOrigins config for Replit dev environment
+  - Zero emerald references remain in source code (only CSS comments for deal status docs)
+  - Clean production build with no TypeScript errors
+
 - **2026-02-21**: Comprehensive security hardening and UI improvements
   - Persistent rate limiting using Supabase database (migration 008_rate_limits.sql)
   - Input sanitization utility (sanitize.ts) with Zod validation schemas

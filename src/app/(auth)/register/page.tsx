@@ -35,7 +35,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-emerald-600 to-green-700 text-white p-12 items-center justify-center relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-black to-[#575757] text-white p-12 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-64 h-64 border-4 border-white rounded-full" />
           <div className="absolute bottom-20 left-20 w-96 h-96 border-4 border-white rounded-full" />
@@ -86,7 +86,7 @@ export default function RegisterPage() {
           className="w-full max-w-md"
         >
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 text-white mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-black to-[#575757] text-white mb-4">
               <Factory className="h-8 w-8" />
             </div>
             <h1 className="text-2xl font-bold">إنشاء حساب جديد</h1>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                   placeholder="أحمد محمد العتيبي"
                   required
                   minLength={2}
-                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-black dark:focus:ring-[#E6E6E6] focus:border-transparent transition-all"
                 />
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function RegisterPage() {
                   placeholder="05XXXXXXXX"
                   required
                   pattern="^(05)[0-9]{8}$"
-                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-black dark:focus:ring-[#E6E6E6] focus:border-transparent transition-all"
                   dir="ltr"
                 />
               </div>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                   name="email"
                   placeholder="example@factory.com"
                   required
-                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-black dark:focus:ring-[#E6E6E6] focus:border-transparent transition-all"
                   dir="ltr"
                 />
               </div>
@@ -156,15 +156,15 @@ export default function RegisterPage() {
                 type="checkbox"
                 id="terms"
                 required
-                className="mt-1 w-4 h-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                className="mt-1 w-4 h-4 rounded border-gray-300 text-black focus:ring-black dark:text-[#E6E6E6] dark:focus:ring-[#E6E6E6]"
               />
               <label htmlFor="terms" className="text-sm text-muted-foreground">
                 أوافق على{' '}
-                <Link href="/terms" className="text-emerald-600 hover:underline">
+                <Link href="/terms" className="text-foreground hover:underline font-medium">
                   شروط الاستخدام
                 </Link>
                 {' '}و{' '}
-                <Link href="/privacy" className="text-emerald-600 hover:underline">
+                <Link href="/privacy" className="text-foreground hover:underline font-medium">
                   سياسة الخصوصية
                 </Link>
               </label>
@@ -193,7 +193,7 @@ export default function RegisterPage() {
             لديك حساب بالفعل؟{' '}
             <Link
               href="/login"
-              className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+              className="text-foreground hover:text-[#575757] font-medium transition-colors underline"
             >
               سجّل دخولك
             </Link>

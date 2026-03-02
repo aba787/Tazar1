@@ -46,7 +46,7 @@ function LoginForm() {
           className="w-full max-w-md"
         >
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 text-white mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-black to-[#575757] text-white mb-4">
               <Factory className="h-8 w-8" />
             </div>
             <h1 className="text-2xl font-bold">مرحباً بك</h1>
@@ -75,7 +75,7 @@ function LoginForm() {
                   placeholder="example@factory.com"
                   required
                   autoComplete="email"
-                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="w-full h-12 pr-10 pl-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-black dark:focus:ring-[#E6E6E6] focus:border-transparent transition-all"
                   dir="ltr"
                 />
               </div>
@@ -104,7 +104,7 @@ function LoginForm() {
             ليس لديك حساب؟{' '}
             <Link
               href="/register"
-              className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors"
+              className="text-foreground hover:text-[#575757] font-medium transition-colors underline"
             >
               سجّل الآن
             </Link>
@@ -112,7 +112,7 @@ function LoginForm() {
         </motion.div>
       </div>
 
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-emerald-600 to-green-700 text-white p-12 items-center justify-center relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-black to-[#575757] text-white p-12 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-64 h-64 border-4 border-white rounded-full" />
           <div className="absolute bottom-20 left-20 w-96 h-96 border-4 border-white rounded-full" />
@@ -148,7 +148,7 @@ export default function LoginPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     }>
       <LoginForm />

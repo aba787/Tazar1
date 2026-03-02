@@ -231,21 +231,21 @@ const statsData = [
 // ============================================================================
 
 const glassCardClass = `
-  rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl
-  border border-gray-200/50 dark:border-gray-700/50
+  rounded-2xl bg-card/80 dark:bg-card/80 backdrop-blur-xl
+  border border-border/50 dark:border-border/50
   shadow-[0_8px_32px_rgba(0,0,0,0.06)]
   hover:shadow-[0_16px_48px_rgba(0,0,0,0.1)]
   hover:-translate-y-0.5 transition-all duration-300
 `;
 
 const statusColors: Record<EquipmentCapabilityStatus, string> = {
-  available: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300',
+  available: 'bg-muted text-foreground dark:bg-muted dark:text-foreground',
   busy: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
   maintenance: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
 };
 
 const contractTypeColors: Record<ContractType, { bg: string; text: string }> = {
-  unit: { bg: 'bg-emerald-50 dark:bg-emerald-900/30', text: 'text-emerald-700 dark:text-emerald-300' },
+  unit: { bg: 'bg-muted dark:bg-muted', text: 'text-foreground dark:text-foreground' },
   shift: { bg: 'bg-blue-50 dark:bg-blue-900/30', text: 'text-blue-700 dark:text-blue-300' },
   hourly: { bg: 'bg-amber-50 dark:bg-amber-900/30', text: 'text-amber-700 dark:text-amber-300' },
   project: { bg: 'bg-purple-50 dark:bg-purple-900/30', text: 'text-purple-700 dark:text-purple-300' },
@@ -298,7 +298,7 @@ function EquipmentCapabilityCard({
           <h3 className="font-bold text-foreground text-lg">{equipment.name}</h3>
           <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
             <span>{equipment.ownerName}</span>
-            {equipment.ownerVerified && <Check className="h-4 w-4 text-emerald-500" />}
+            {equipment.ownerVerified && <Check className="h-4 w-4 text-foreground" />}
           </div>
         </div>
 
@@ -369,7 +369,7 @@ function EquipmentCapabilityCard({
               <span
                 className={cn(
                   'text-xs',
-                  equipment.availability.shifts.morning ? 'text-emerald-600' : 'text-gray-400 line-through'
+                  equipment.availability.shifts.morning ? 'text-foreground' : 'text-muted-foreground line-through'
                 )}
               >
                 صباحي {equipment.availability.shifts.morning ? '✓' : '✗'}
@@ -378,7 +378,7 @@ function EquipmentCapabilityCard({
               <span
                 className={cn(
                   'text-xs',
-                  equipment.availability.shifts.evening ? 'text-emerald-600' : 'text-gray-400 line-through'
+                  equipment.availability.shifts.evening ? 'text-foreground' : 'text-muted-foreground line-through'
                 )}
               >
                 مسائي {equipment.availability.shifts.evening ? '✓' : '✗'}
@@ -387,7 +387,7 @@ function EquipmentCapabilityCard({
               <span
                 className={cn(
                   'text-xs',
-                  equipment.availability.shifts.night ? 'text-emerald-600' : 'text-gray-400 line-through'
+                  equipment.availability.shifts.night ? 'text-foreground' : 'text-muted-foreground line-through'
                 )}
               >
                 ليلي {equipment.availability.shifts.night ? '✓' : '✗'}
@@ -612,7 +612,7 @@ export default function CapacityExchangePage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
             >
-              <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-6 space-y-4">
+              <div className="w-full max-w-md bg-card rounded-2xl shadow-2xl p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="text-lg font-bold">أضف قدراتك الإنتاجية</h2>
                   <button
@@ -625,16 +625,16 @@ export default function CapacityExchangePage() {
 
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">اسم المعدة</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">اسم المعدة</label>
                     <input
                       type="text"
                       placeholder="مثال: ماكينة CNC خمس محاور"
-                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">النوع</label>
-                    <select className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    <label className="block text-sm font-medium text-foreground mb-1">النوع</label>
+                    <select className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50">
                       <option value="CNC">CNC</option>
                       <option value="3D_PRINT">طباعة ثلاثية الأبعاد</option>
                       <option value="WELDING">لحام</option>
@@ -643,19 +643,19 @@ export default function CapacityExchangePage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">الوصف</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">الوصف</label>
                     <textarea
                       rows={3}
                       placeholder="وصف تفصيلي للقدرة الإنتاجية..."
-                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                      className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50 resize-none"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">السعر (ر.س./ساعة)</label>
+                    <label className="block text-sm font-medium text-foreground mb-1">السعر (ر.س./ساعة)</label>
                     <input
                       type="number"
                       placeholder="500"
-                      className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      className="w-full px-4 py-2.5 border border-border rounded-xl bg-background focus:ring-2 focus:ring-foreground/20 focus:border-foreground/50"
                     />
                   </div>
                 </div>

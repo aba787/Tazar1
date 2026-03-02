@@ -39,7 +39,7 @@ const statusConfig: Record<OrderStatus, { label: string; icon: React.ReactNode; 
   completed: {
     label: 'مكتمل',
     icon: <CheckCircle className="h-4 w-4" />,
-    color: 'text-emerald-600 bg-emerald-50',
+    color: 'text-foreground bg-muted',
     badgeVariant: 'success',
   },
   cancelled: {
@@ -68,8 +68,8 @@ function OrderTimeline({ timeline }: { timeline: OrderItem['timeline'] }) {
               <div className={cn(
                 'w-6 h-6 rounded-full flex items-center justify-center border-2 transition-colors',
                 step.completed
-                  ? 'bg-emerald-500 border-emerald-500 text-white'
-                  : 'bg-white border-gray-300 text-gray-400'
+                  ? 'bg-foreground border-foreground text-background'
+                  : 'bg-background border-border text-muted-foreground'
               )}>
                 {step.completed ? (
                   <CheckCircle className="h-3.5 w-3.5" />
@@ -79,7 +79,7 @@ function OrderTimeline({ timeline }: { timeline: OrderItem['timeline'] }) {
               </div>
               <span className={cn(
                 'text-[10px] mt-1 text-center leading-tight',
-                step.completed ? 'text-emerald-700 font-medium' : 'text-muted-foreground'
+                step.completed ? 'text-foreground font-medium' : 'text-muted-foreground'
               )}>
                 {step.label}
               </span>
@@ -87,7 +87,7 @@ function OrderTimeline({ timeline }: { timeline: OrderItem['timeline'] }) {
             {i < timeline.length - 1 && (
               <div className={cn(
                 'h-0.5 flex-1 min-w-[20px] -mt-4',
-                step.completed ? 'bg-emerald-500' : 'bg-gray-200'
+                step.completed ? 'bg-foreground' : 'bg-muted'
               )} />
             )}
           </React.Fragment>
@@ -171,10 +171,10 @@ export default function OrdersPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="bg-white dark:bg-gray-900">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
-              <Package className="h-6 w-6 text-blue-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <Package className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.total}</p>
@@ -182,10 +182,10 @@ export default function OrdersPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-gray-900">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50">
-              <Clock className="h-6 w-6 text-amber-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <Clock className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.pending + stats.active}</p>
@@ -193,10 +193,10 @@ export default function OrdersPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-gray-900">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50">
-              <CheckCircle className="h-6 w-6 text-emerald-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <CheckCircle className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.completed}</p>
@@ -204,10 +204,10 @@ export default function OrdersPage() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-gray-900">
+        <Card className="bg-card">
           <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50">
-              <XCircle className="h-6 w-6 text-red-600" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-muted">
+              <XCircle className="h-6 w-6 text-foreground" />
             </div>
             <div>
               <p className="text-2xl font-bold">{stats.cancelled}</p>

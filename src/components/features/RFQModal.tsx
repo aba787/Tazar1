@@ -257,10 +257,10 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                     className={cn(
                       'flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium transition-all',
                       s === step
-                        ? 'bg-emerald-500 text-white'
+                        ? 'bg-foreground text-background'
                         : s < step
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300'
-                          : 'bg-gray-100 text-gray-400 dark:bg-gray-800'
+                          ? 'bg-muted text-foreground'
+                          : 'bg-muted text-muted-foreground'
                     )}
                   >
                     {s < step ? <CheckCircle2 className="h-4 w-4" /> : s}
@@ -269,7 +269,7 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
               </div>
               <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-emerald-500"
+                  className="h-full bg-foreground"
                   initial={{ width: 0 }}
                   animate={{ width: `${(step / totalSteps) * 100}%` }}
                   transition={{ duration: 0.3 }}
@@ -289,8 +289,8 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                   exit={{ opacity: 0, y: -20 }}
                   className="text-center py-8"
                 >
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/50">
-                    <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+                    <CheckCircle2 className="h-8 w-8 text-foreground" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">
                     تم إرسال طلب عرض السعر بنجاح
@@ -326,16 +326,16 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                             className={cn(
                               'p-6 rounded-xl border-2 text-center transition-all',
                               formData.jobType === option.type
-                                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
-                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                                ? 'border-foreground bg-muted'
+                                : 'border-border hover:border-muted-foreground'
                             )}
                           >
                             <option.icon
                               className={cn(
                                 'h-8 w-8 mx-auto mb-3',
                                 formData.jobType === option.type
-                                  ? 'text-emerald-600 dark:text-emerald-400'
-                                  : 'text-gray-400'
+                                  ? 'text-foreground'
+                                  : 'text-muted-foreground'
                               )}
                             />
                             <p className="font-semibold text-foreground">{option.title}</p>
@@ -445,8 +445,8 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                                   className={cn(
                                     'flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-all',
                                     formData.preferredShifts.includes(shift.value)
-                                      ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
-                                      : 'border-gray-200 dark:border-gray-700',
+                                      ? 'border-foreground bg-muted'
+                                      : 'border-border',
                                     !equipment.availability.shifts[shift.value] && 'opacity-50 cursor-not-allowed'
                                   )}
                                 >
@@ -622,8 +622,8 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                             className={cn(
                               'flex items-center p-4 rounded-lg border cursor-pointer transition-all',
                               formData.needsOperator
-                                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
-                                : 'border-gray-200 dark:border-gray-700'
+                                ? 'border-foreground bg-muted'
+                                : 'border-border'
                             )}
                           >
                             <input
@@ -645,8 +645,8 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                             className={cn(
                               'flex items-center p-4 rounded-lg border cursor-pointer transition-all',
                               !formData.needsOperator
-                                ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30'
-                                : 'border-gray-200 dark:border-gray-700'
+                                ? 'border-foreground bg-muted'
+                                : 'border-border'
                             )}
                           >
                             <input
@@ -737,14 +737,14 @@ export function RFQModal({ isOpen, onClose, equipment }: RFQModalProps) {
                       </div>
 
                       {getEstimatedPrice() && (
-                        <div className="rounded-xl bg-emerald-50 dark:bg-emerald-900/30 p-4 text-center">
-                          <p className="text-sm text-emerald-700 dark:text-emerald-300 mb-1">
+                        <div className="rounded-xl bg-muted p-4 text-center">
+                          <p className="text-sm text-foreground mb-1">
                             السعر التقديري*
                           </p>
-                          <p className="text-2xl font-bold font-numbers text-emerald-600 dark:text-emerald-400">
+                          <p className="text-2xl font-bold font-numbers text-foreground">
                             {formatCurrency(getEstimatedPrice()!.min)} - {formatCurrency(getEstimatedPrice()!.max)}
                           </p>
-                          <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
+                          <p className="text-xs text-muted-foreground mt-1">
                             * السعر النهائي يحدده المورد
                           </p>
                         </div>

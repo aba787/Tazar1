@@ -96,7 +96,7 @@ export default function FactoriesPage() {
               placeholder="بحث باسم المصنع أو السجل التجاري..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-10 pr-10 pl-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              className="w-full h-10 pr-10 pl-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function FactoriesPage() {
                   px-4 py-2 rounded-lg text-sm font-medium transition-colors
                   ${
                     statusFilter === option.value
-                      ? 'bg-emerald-600 text-white'
+                      ? 'bg-black dark:bg-white text-white dark:text-black'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }
                 `}
@@ -156,7 +156,7 @@ export default function FactoriesPage() {
                     className="px-6 py-8 text-center text-gray-500 dark:text-gray-400"
                   >
                     <div className="flex items-center justify-center gap-2">
-                      <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
                       جاري التحميل...
                     </div>
                   </td>

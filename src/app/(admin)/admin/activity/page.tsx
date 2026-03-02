@@ -20,7 +20,7 @@ export default async function AdminActivityPage() {
     factory: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
     deal: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
     participation: 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
-    admin: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    admin: 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
   };
 
   function formatTime(timestamp: string) {
@@ -46,7 +46,7 @@ export default async function AdminActivityPage() {
         </div>
         <Link
           href="/admin/activity"
-          className="flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         >
           <RefreshCw className="h-4 w-4" />
           تحديث
@@ -95,8 +95,8 @@ export default async function AdminActivityPage() {
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-              <Shield className="h-5 w-5 text-emerald-600" />
+            <div className="w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+              <Shield className="h-5 w-5 text-gray-700 dark:text-gray-300" />
             </div>
             <div>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -110,7 +110,7 @@ export default async function AdminActivityPage() {
 
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
         <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
-          <Activity className="h-5 w-5 text-emerald-600" />
+          <Activity className="h-5 w-5 text-gray-700 dark:text-gray-300" />
           <h2 className="font-semibold text-gray-900 dark:text-white">النشاط المباشر</h2>
           <Badge variant="success">مباشر</Badge>
         </div>

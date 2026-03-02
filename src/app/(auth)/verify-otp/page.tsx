@@ -131,7 +131,7 @@ function VerifyOtpForm() {
         className="w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 text-white mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-black to-[#575757] text-white mb-4">
             <ShieldCheck className="h-8 w-8" />
           </div>
           <h1 className="text-2xl font-bold">أدخل كود التحقق</h1>
@@ -165,7 +165,7 @@ function VerifyOtpForm() {
               onPaste={handlePaste}
               onKeyDown={(e) => handleKeyDown(index, e)}
               disabled={isLoading}
-              className="w-12 h-14 text-center text-2xl font-bold rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all disabled:opacity-50"
+              className="w-12 h-14 text-center text-2xl font-bold rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm focus:ring-2 focus:ring-black dark:focus:ring-[#E6E6E6] focus:border-black dark:focus:border-[#E6E6E6] transition-all disabled:opacity-50"
             />
           ))}
         </div>
@@ -192,7 +192,7 @@ function VerifyOtpForm() {
           <button
             onClick={handleResend}
             disabled={resendCooldown > 0 || isResending}
-            className="text-sm text-emerald-600 hover:text-emerald-700 font-medium transition-colors disabled:text-muted-foreground disabled:cursor-not-allowed flex items-center gap-2 mx-auto"
+            className="text-sm text-foreground hover:text-[#575757] font-medium transition-colors disabled:text-muted-foreground disabled:cursor-not-allowed flex items-center gap-2 mx-auto"
           >
             {isResending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -222,7 +222,7 @@ export default function VerifyOtpPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-foreground" />
       </div>
     }>
       <VerifyOtpForm />

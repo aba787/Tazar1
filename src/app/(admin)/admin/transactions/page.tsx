@@ -158,7 +158,7 @@ export default function AdminTransactionsPage() {
                 onClick={() => setFilter(s)}
                 className={`px-3 py-1 text-sm rounded-lg transition-colors ${
                   filter === s
-                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                    ? 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                     : 'text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
                 }`}
               >
@@ -173,7 +173,7 @@ export default function AdminTransactionsPage() {
               placeholder="بحث..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pr-10 pl-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500"
+              className="pr-10 pl-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-gray-500"
             />
           </div>
         </div>

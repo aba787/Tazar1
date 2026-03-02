@@ -59,14 +59,12 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Form State
   const [formData, setFormData] = useState<JoinDealFormData>({
     quantity: deal.minQuantity || 10,
     deliveryPreference: 'individual',
     commitmentMethod: 'escrow',
   });
 
-  // Get current tier based on total quantity after joining
   const projectedQuantity = deal.currentQuantity + formData.quantity;
 
   const currentTier = useMemo(() => {
@@ -80,7 +78,6 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
     return deal.pricingTiers.find(t => t.tierIndex === 0) || null;
   }, [deal.pricingTiers, projectedQuantity]);
 
-  // Calculate pricing
   const pricePerUnit = currentTier?.pricePerUnit || deal.marketPricePerUnit;
   const totalAmount = pricePerUnit * formData.quantity;
   const escrowAmount = Math.round((totalAmount * deal.escrowPercentage) / 100);
@@ -115,7 +112,6 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <motion.div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         initial={{ opacity: 0 }}
@@ -124,29 +120,26 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
         onClick={onClose}
       />
 
-      {/* Modal */}
       <motion.div
-        className="relative w-full max-w-2xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden mx-4"
+        className="relative w-full max-w-2xl max-h-[90vh] bg-card rounded-2xl shadow-2xl overflow-hidden mx-4"
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
       >
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">الانضمام للصفقة</h2>
-            <p className="text-sm text-gray-500">{deal.title}</p>
+            <h2 className="text-lg font-bold text-foreground">الانضمام للصفقة</h2>
+            <p className="text-sm text-muted-foreground">{deal.title}</p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-accent transition-colors"
           >
-            <X className="w-4 h-4 text-gray-500" />
+            <X className="w-4 h-4 text-muted-foreground" />
           </button>
         </div>
 
-        {/* Progress Steps */}
-        <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
+        <div className="px-6 py-4 bg-muted border-b border-border">
           <div className="flex items-center justify-between">
             {STEPS.map((s, index) => {
               const Icon = s.icon;
@@ -159,9 +152,9 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
                     <div
                       className={cn(
                         'w-10 h-10 rounded-full flex items-center justify-center transition-all',
-                        isActive && 'bg-emerald-500 text-white',
-                        isCompleted && 'bg-emerald-100 text-emerald-600',
-                        !isActive && !isCompleted && 'bg-gray-100 text-gray-400'
+                        isActive && 'bg-foreground text-background',
+                        isCompleted && 'bg-[#E6E6E6] text-foreground',
+                        !isActive && !isCompleted && 'bg-background text-muted-foreground'
                       )}
                     >
                       {isCompleted ? (
@@ -173,9 +166,9 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
                     <span
                       className={cn(
                         'text-sm font-medium hidden sm:block',
-                        isActive && 'text-emerald-600',
-                        isCompleted && 'text-gray-600',
-                        !isActive && !isCompleted && 'text-gray-400'
+                        isActive && 'text-foreground',
+                        isCompleted && 'text-muted-foreground',
+                        !isActive && !isCompleted && 'text-muted-foreground'
                       )}
                     >
                       {s.title}
@@ -185,7 +178,7 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
                     <div
                       className={cn(
                         'flex-1 h-0.5 mx-4',
-                        isCompleted ? 'bg-emerald-300' : 'bg-gray-200'
+                        isCompleted ? 'bg-[#575757]' : 'bg-[#E6E6E6]'
                       )}
                     />
                   )}
@@ -195,7 +188,6 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[50vh]">
           <AnimatePresence mode="wait">
             {step === 1 && (
@@ -241,11 +233,10 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
           </AnimatePresence>
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50">
+        <div className="px-6 py-4 border-t border-border flex items-center justify-between bg-muted">
           <button
             onClick={step === 1 ? onClose : handleBack}
-            className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
             <span>{step === 1 ? 'إلغاء' : 'رجوع'}</span>
@@ -254,7 +245,7 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
           {step < 4 ? (
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 transition-colors"
+              className="flex items-center gap-2 px-6 py-2.5 bg-foreground text-background rounded-xl font-medium hover:bg-[#575757] transition-colors"
             >
               <span>التالي</span>
               <ChevronLeft className="w-4 h-4" />
@@ -263,13 +254,13 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-6 py-2.5 bg-foreground text-background rounded-xl font-medium hover:bg-[#575757] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
                   <span>جاري الإرسال...</span>
                   <motion.div
-                    className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                    className="w-4 h-4 border-2 border-background border-t-transparent rounded-full"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   />
@@ -287,8 +278,6 @@ export function JoinDealModal({ isOpen, onClose, deal, onSubmit }: JoinDealModal
     </div>
   );
 }
-
-// ========== Step Components ==========
 
 interface StepQuantityProps {
   deal: ProcurementDeal;
@@ -324,64 +313,61 @@ function StepQuantity({
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      {/* Quantity Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block text-sm font-medium text-foreground mb-3">
           الكمية المطلوبة ({deal.unit})
         </label>
         <div className="flex items-center gap-4">
           <button
             onClick={() => adjustQuantity(-10)}
-            className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center hover:bg-accent transition-colors"
           >
-            <Minus className="w-5 h-5 text-gray-600" />
+            <Minus className="w-5 h-5 text-muted-foreground" />
           </button>
           <input
             type="number"
             value={quantity}
             onChange={(e) => onQuantityChange(Math.max(minQty, Math.min(maxQty, Number(e.target.value) || minQty)))}
-            className="flex-1 text-center text-2xl font-bold py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            className="flex-1 text-center text-2xl font-bold py-3 border border-border rounded-xl focus:ring-2 focus:ring-foreground focus:border-foreground bg-background"
           />
           <button
             onClick={() => adjustQuantity(10)}
-            className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+            className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center hover:bg-accent transition-colors"
           >
-            <Plus className="w-5 h-5 text-gray-600" />
+            <Plus className="w-5 h-5 text-muted-foreground" />
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
+        <p className="text-xs text-muted-foreground mt-2 text-center">
           الحد الأدنى: {formatNumber(minQty)} {deal.unit} | الحد الأقصى: {formatNumber(maxQty)} {deal.unit}
         </p>
       </div>
 
-      {/* Live Price Calculator */}
-      <div className="p-4 rounded-xl bg-gradient-to-l from-emerald-50 to-teal-50 border border-emerald-200">
+      <div className="p-4 rounded-xl bg-gradient-to-l from-muted to-accent border border-border">
         <div className="flex items-center gap-3 mb-4">
-          <Calculator className="w-5 h-5 text-emerald-600" />
-          <span className="font-medium text-gray-900">حاسبة السعر المباشر</span>
+          <Calculator className="w-5 h-5 text-foreground" />
+          <span className="font-medium text-foreground">حاسبة السعر المباشر</span>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="text-center p-3 bg-white rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">سعر الوحدة</p>
-            <p className="text-lg font-bold text-gray-900">{formatCurrency(pricePerUnit)}</p>
-            <p className="text-xs text-gray-400">/{deal.unit}</p>
+          <div className="text-center p-3 bg-background rounded-lg">
+            <p className="text-xs text-muted-foreground mb-1">سعر الوحدة</p>
+            <p className="text-lg font-bold text-foreground">{formatCurrency(pricePerUnit)}</p>
+            <p className="text-xs text-muted-foreground">/{deal.unit}</p>
           </div>
-          <div className="text-center p-3 bg-white rounded-lg">
-            <p className="text-xs text-gray-500 mb-1">الإجمالي</p>
-            <p className="text-lg font-bold text-emerald-600">{formatCurrency(totalAmount)}</p>
+          <div className="text-center p-3 bg-background rounded-lg">
+            <p className="text-xs text-muted-foreground mb-1">الإجمالي</p>
+            <p className="text-lg font-bold text-foreground">{formatCurrency(totalAmount)}</p>
             {savingsPercentage > 0 && (
-              <p className="text-xs text-emerald-500">توفير {savingsPercentage}%</p>
+              <p className="text-xs text-muted-foreground">توفير {savingsPercentage}%</p>
             )}
           </div>
         </div>
 
-        {/* Current Tier Info */}
         {currentTier && (
-          <div className="mt-4 pt-4 border-t border-emerald-200">
+          <div className="mt-4 pt-4 border-t border-border">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">الشريحة الحالية:</span>
-              <span className="font-medium text-emerald-600">{currentTier.tierLabel}</span>
+              <span className="text-muted-foreground">الشريحة الحالية:</span>
+              <span className="font-medium text-foreground">{currentTier.tierLabel}</span>
             </div>
           </div>
         )}
@@ -403,9 +389,8 @@ function StepDelivery({ formData, onUpdate }: StepDeliveryProps) {
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      {/* Delivery Preference */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block text-sm font-medium text-foreground mb-3">
           نوع التسليم
         </label>
         <div className="grid grid-cols-2 gap-4">
@@ -414,16 +399,16 @@ function StepDelivery({ formData, onUpdate }: StepDeliveryProps) {
             className={cn(
               'p-4 rounded-xl border-2 text-right transition-all',
               formData.deliveryPreference === 'individual'
-                ? 'border-emerald-500 bg-emerald-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-foreground bg-muted'
+                : 'border-border hover:border-muted-foreground'
             )}
           >
             <Building2 className={cn(
               'w-6 h-6 mb-2',
-              formData.deliveryPreference === 'individual' ? 'text-emerald-600' : 'text-gray-400'
+              formData.deliveryPreference === 'individual' ? 'text-foreground' : 'text-muted-foreground'
             )} />
-            <p className="font-medium text-gray-900">تسليم فردي</p>
-            <p className="text-xs text-gray-500 mt-1">التسليم مباشرة لموقع مصنعك</p>
+            <p className="font-medium text-foreground">تسليم فردي</p>
+            <p className="text-xs text-muted-foreground mt-1">التسليم مباشرة لموقع مصنعك</p>
           </button>
 
           <button
@@ -431,24 +416,23 @@ function StepDelivery({ formData, onUpdate }: StepDeliveryProps) {
             className={cn(
               'p-4 rounded-xl border-2 text-right transition-all',
               formData.deliveryPreference === 'consolidated'
-                ? 'border-emerald-500 bg-emerald-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-foreground bg-muted'
+                : 'border-border hover:border-muted-foreground'
             )}
           >
             <Package className={cn(
               'w-6 h-6 mb-2',
-              formData.deliveryPreference === 'consolidated' ? 'text-emerald-600' : 'text-gray-400'
+              formData.deliveryPreference === 'consolidated' ? 'text-foreground' : 'text-muted-foreground'
             )} />
-            <p className="font-medium text-gray-900">تسليم مجمّع</p>
-            <p className="text-xs text-gray-500 mt-1">نقطة استلام مشتركة (أرخص)</p>
+            <p className="font-medium text-foreground">تسليم مجمّع</p>
+            <p className="text-xs text-muted-foreground mt-1">نقطة استلام مشتركة (أرخص)</p>
           </button>
         </div>
       </div>
 
-      {/* Delivery Address (for individual) */}
       {formData.deliveryPreference === 'individual' && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-foreground mb-2">
             <MapPin className="w-4 h-4 inline ml-1" />
             عنوان التسليم
           </label>
@@ -457,21 +441,20 @@ function StepDelivery({ formData, onUpdate }: StepDeliveryProps) {
             onChange={(e) => onUpdate({ deliveryAddress: e.target.value })}
             placeholder="أدخل العنوان الكامل لموقع التسليم..."
             rows={3}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+            className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-foreground focus:border-foreground resize-none bg-background"
           />
         </div>
       )}
 
-      {/* Incoterm Selection */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-foreground mb-2">
           <Truck className="w-4 h-4 inline ml-1" />
           شروط التسليم (Incoterm)
         </label>
         <select
           value={formData.deliveryIncoterm || 'DDP'}
           onChange={(e) => onUpdate({ deliveryIncoterm: e.target.value as Incoterm })}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+          className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-foreground focus:border-foreground bg-background"
         >
           {(Object.entries(INCOTERM_LABELS) as [Incoterm, string][]).map(([key, label]) => (
             <option key={key} value={key}>{label}</option>
@@ -497,54 +480,51 @@ function StepCommitment({ formData, onUpdate, escrowAmount, escrowPercentage }: 
       exit={{ opacity: 0, x: -20 }}
       className="space-y-6"
     >
-      {/* Commitment Method */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block text-sm font-medium text-foreground mb-3">
           طريقة الالتزام
         </label>
         <div className="space-y-3">
-          {/* PO Option */}
           <button
             onClick={() => onUpdate({ commitmentMethod: 'po' })}
             className={cn(
               'w-full p-4 rounded-xl border-2 text-right transition-all',
               formData.commitmentMethod === 'po'
-                ? 'border-emerald-500 bg-emerald-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-foreground bg-muted'
+                : 'border-border hover:border-muted-foreground'
             )}
           >
             <div className="flex items-start gap-3">
               <FileText className={cn(
                 'w-6 h-6 mt-0.5',
-                formData.commitmentMethod === 'po' ? 'text-emerald-600' : 'text-gray-400'
+                formData.commitmentMethod === 'po' ? 'text-foreground' : 'text-muted-foreground'
               )} />
               <div>
-                <p className="font-medium text-gray-900">أمر شراء (PO)</p>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="font-medium text-foreground">أمر شراء (PO)</p>
+                <p className="text-sm text-muted-foreground mt-1">
                   رفع أمر شراء رسمي من مصنعك كإثبات للالتزام
                 </p>
               </div>
             </div>
           </button>
 
-          {/* Escrow Option */}
           <button
             onClick={() => onUpdate({ commitmentMethod: 'escrow' })}
             className={cn(
               'w-full p-4 rounded-xl border-2 text-right transition-all',
               formData.commitmentMethod === 'escrow'
-                ? 'border-emerald-500 bg-emerald-50'
-                : 'border-gray-200 hover:border-gray-300'
+                ? 'border-foreground bg-muted'
+                : 'border-border hover:border-muted-foreground'
             )}
           >
             <div className="flex items-start gap-3">
               <Shield className={cn(
                 'w-6 h-6 mt-0.5',
-                formData.commitmentMethod === 'escrow' ? 'text-emerald-600' : 'text-gray-400'
+                formData.commitmentMethod === 'escrow' ? 'text-foreground' : 'text-muted-foreground'
               )} />
               <div>
-                <p className="font-medium text-gray-900">ضمان مالي (Escrow)</p>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="font-medium text-foreground">ضمان مالي (Escrow)</p>
+                <p className="text-sm text-muted-foreground mt-1">
                   دفع {escrowPercentage}% كضمان ({formatCurrency(escrowAmount)}) - يُسترد عند التسليم
                 </p>
               </div>
@@ -553,11 +533,10 @@ function StepCommitment({ formData, onUpdate, escrowAmount, escrowPercentage }: 
         </div>
       </div>
 
-      {/* PO Details */}
       {formData.commitmentMethod === 'po' && (
-        <div className="space-y-4 p-4 bg-gray-50 rounded-xl">
+        <div className="space-y-4 p-4 bg-muted rounded-xl">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               رقم أمر الشراء
             </label>
             <input
@@ -565,24 +544,23 @@ function StepCommitment({ formData, onUpdate, escrowAmount, escrowPercentage }: 
               value={formData.poNumber || ''}
               onChange={(e) => onUpdate({ poNumber: e.target.value })}
               placeholder="PO-2025-XXXXX"
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-foreground focus:border-foreground bg-background"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               رفع ملف أمر الشراء
             </label>
-            <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center hover:border-emerald-300 transition-colors cursor-pointer">
-              <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-gray-600">اسحب الملف هنا أو انقر للرفع</p>
-              <p className="text-xs text-gray-400 mt-1">PDF, PNG, JPG (حتى 10MB)</p>
+            <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-muted-foreground transition-colors cursor-pointer">
+              <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <p className="text-sm text-muted-foreground">اسحب الملف هنا أو انقر للرفع</p>
+              <p className="text-xs text-muted-foreground mt-1">PDF, PNG, JPG (حتى 10MB)</p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Escrow Info */}
       {formData.commitmentMethod === 'escrow' && (
         <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
           <div className="flex items-start gap-3">
@@ -627,97 +605,93 @@ function StepReview({
       className="space-y-6"
     >
       <div className="text-center mb-4">
-        <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-          <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+        <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-3">
+          <CheckCircle2 className="w-8 h-8 text-foreground" />
         </div>
-        <h3 className="text-lg font-bold text-gray-900">مراجعة طلب الانضمام</h3>
-        <p className="text-sm text-gray-500">تأكد من صحة البيانات قبل الإرسال</p>
+        <h3 className="text-lg font-bold text-foreground">مراجعة طلب الانضمام</h3>
+        <p className="text-sm text-muted-foreground">تأكد من صحة البيانات قبل الإرسال</p>
       </div>
 
       <div className="space-y-4">
-        {/* Order Summary */}
-        <div className="p-4 bg-gray-50 rounded-xl">
-          <h4 className="font-medium text-gray-700 mb-3">ملخص الطلب</h4>
+        <div className="p-4 bg-muted rounded-xl">
+          <h4 className="font-medium text-foreground mb-3">ملخص الطلب</h4>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500">المادة:</span>
-              <span className="font-medium text-gray-900">{deal.title}</span>
+              <span className="text-muted-foreground">المادة:</span>
+              <span className="font-medium text-foreground">{deal.title}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">الكمية:</span>
-              <span className="font-medium text-gray-900">{formatNumber(formData.quantity)} {deal.unit}</span>
+              <span className="text-muted-foreground">الكمية:</span>
+              <span className="font-medium text-foreground">{formatNumber(formData.quantity)} {deal.unit}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">الشريحة:</span>
-              <span className="font-medium text-emerald-600">{currentTier?.tierLabel || '-'}</span>
+              <span className="text-muted-foreground">الشريحة:</span>
+              <span className="font-medium text-foreground">{currentTier?.tierLabel || '-'}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">سعر الوحدة:</span>
-              <span className="font-medium text-gray-900">{formatCurrency(pricePerUnit)}/{deal.unit}</span>
+              <span className="text-muted-foreground">سعر الوحدة:</span>
+              <span className="font-medium text-foreground">{formatCurrency(pricePerUnit)}/{deal.unit}</span>
             </div>
           </div>
         </div>
 
-        {/* Delivery Summary */}
-        <div className="p-4 bg-gray-50 rounded-xl">
-          <h4 className="font-medium text-gray-700 mb-3">التسليم</h4>
+        <div className="p-4 bg-muted rounded-xl">
+          <h4 className="font-medium text-foreground mb-3">التسليم</h4>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-500">نوع التسليم:</span>
-              <span className="font-medium text-gray-900">
+              <span className="text-muted-foreground">نوع التسليم:</span>
+              <span className="font-medium text-foreground">
                 {formData.deliveryPreference === 'individual' ? 'تسليم فردي' : 'تسليم مجمّع'}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-500">شروط التسليم:</span>
-              <span className="font-medium text-gray-900">
+              <span className="text-muted-foreground">شروط التسليم:</span>
+              <span className="font-medium text-foreground">
                 {INCOTERM_LABELS[formData.deliveryIncoterm || 'DDP']}
               </span>
             </div>
             {formData.deliveryAddress && (
-              <div className="pt-2 border-t border-gray-200">
-                <span className="text-gray-500">العنوان:</span>
-                <p className="font-medium text-gray-900 mt-1">{formData.deliveryAddress}</p>
+              <div className="pt-2 border-t border-border">
+                <span className="text-muted-foreground">العنوان:</span>
+                <p className="font-medium text-foreground mt-1">{formData.deliveryAddress}</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Payment Summary */}
-        <div className="p-4 bg-gradient-to-l from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
-          <h4 className="font-medium text-gray-700 mb-3">الملخص المالي</h4>
+        <div className="p-4 bg-gradient-to-l from-muted to-accent rounded-xl border border-border">
+          <h4 className="font-medium text-foreground mb-3">الملخص المالي</h4>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">إجمالي الطلب:</span>
-              <span className="font-bold text-gray-900">{formatCurrency(totalAmount)}</span>
+              <span className="text-muted-foreground">إجمالي الطلب:</span>
+              <span className="font-bold text-foreground">{formatCurrency(totalAmount)}</span>
             </div>
             {formData.commitmentMethod === 'escrow' && (
               <div className="flex justify-between">
-                <span className="text-gray-600">الضمان ({deal.escrowPercentage}%):</span>
+                <span className="text-muted-foreground">الضمان ({deal.escrowPercentage}%):</span>
                 <span className="font-bold text-amber-600">{formatCurrency(escrowAmount)}</span>
               </div>
             )}
             {savedAmount > 0 && (
-              <div className="flex justify-between pt-2 border-t border-emerald-200">
-                <span className="text-emerald-600">التوفير:</span>
-                <span className="font-bold text-emerald-600">{formatCurrency(savedAmount)}</span>
+              <div className="flex justify-between pt-2 border-t border-border">
+                <span className="text-foreground">التوفير:</span>
+                <span className="font-bold text-foreground">{formatCurrency(savedAmount)}</span>
               </div>
             )}
           </div>
         </div>
 
-        {/* Commitment Method */}
-        <div className="p-4 bg-gray-50 rounded-xl">
+        <div className="p-4 bg-muted rounded-xl">
           <div className="flex items-center gap-2">
             {formData.commitmentMethod === 'po' ? (
               <>
-                <FileText className="w-5 h-5 text-gray-600" />
-                <span className="font-medium text-gray-900">أمر شراء: {formData.poNumber || 'لم يُحدد'}</span>
+                <FileText className="w-5 h-5 text-muted-foreground" />
+                <span className="font-medium text-foreground">أمر شراء: {formData.poNumber || 'لم يُحدد'}</span>
               </>
             ) : (
               <>
-                <Shield className="w-5 h-5 text-emerald-600" />
-                <span className="font-medium text-gray-900">ضمان مالي: {formatCurrency(escrowAmount)}</span>
+                <Shield className="w-5 h-5 text-foreground" />
+                <span className="font-medium text-foreground">ضمان مالي: {formatCurrency(escrowAmount)}</span>
               </>
             )}
           </div>

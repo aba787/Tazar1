@@ -14,7 +14,6 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, Badge, Progress, Button } from '@/components/ui';
 import { formatCurrency, formatNumber, cn } from '@/lib/utils';
 
-// Types
 export type DetailedDealStatus = 'OPEN' | 'GATHERING' | 'NEGOTIATING' | 'COMPLETED';
 
 export interface DetailedDeal {
@@ -44,33 +43,31 @@ interface DetailedDealCardProps {
   index?: number;
 }
 
-// Status configuration - Apple Design System
 const statusConfig: Record<
   DetailedDealStatus,
   {
     label: string;
-    badgeStyle: string; // Apple colors
+    badgeStyle: string;
   }
 > = {
   OPEN: {
     label: 'مفتوح للانضمام',
-    badgeStyle: 'bg-[#007AFF] text-white border-[#007AFF]', // Apple Blue
+    badgeStyle: 'bg-foreground text-background border-foreground',
   },
   GATHERING: {
     label: 'جاري التجميع',
-    badgeStyle: 'bg-[#007AFF] text-white border-[#007AFF]', // Apple Blue
+    badgeStyle: 'bg-foreground text-background border-foreground',
   },
   NEGOTIATING: {
     label: 'التفاوض',
-    badgeStyle: 'bg-[#34C759] text-white border-[#34C759]', // Apple Green
+    badgeStyle: 'bg-[#575757] text-white border-[#575757]',
   },
   COMPLETED: {
     label: 'مكتمل',
-    badgeStyle: 'bg-[#8E8E93] text-white border-[#8E8E93]', // Apple Gray
+    badgeStyle: 'bg-muted-foreground text-white border-muted-foreground',
   },
 };
 
-// Check if deadline is approaching (within 3 days)
 function isDeadlineApproaching(deadline: string): boolean {
   const deadlineDate = new Date(deadline);
   const now = new Date();
@@ -107,21 +104,19 @@ export function DetailedDealCard({ deal, onJoin, onViewDetails, index = 0 }: Det
                 {description}
               </p>
             </div>
-            {/* Savings Badge */}
-            <div className="flex flex-col items-center rounded-lg bg-emerald-50 px-3 py-2">
+            <div className="flex flex-col items-center rounded-lg bg-muted px-3 py-2">
               <div className="flex items-center gap-1">
-                <TrendingDown className="h-4 w-4 text-emerald-600" />
-                <span className="text-xl font-bold text-emerald-600 font-numbers">
+                <TrendingDown className="h-4 w-4 text-foreground" />
+                <span className="text-xl font-bold text-foreground font-numbers">
                   {financials.savingsPercentage}%
                 </span>
               </div>
-              <span className="text-xs text-emerald-600">توفير</span>
+              <span className="text-xs text-foreground">توفير</span>
             </div>
           </div>
         </CardHeader>
 
         <CardContent className="space-y-4">
-          {/* Specs Tags */}
           <div className="flex flex-wrap gap-2">
             {specs.map((spec, idx) => (
               <span
@@ -133,9 +128,7 @@ export function DetailedDealCard({ deal, onJoin, onViewDetails, index = 0 }: Det
             ))}
           </div>
 
-          {/* Dual Progress Bars */}
           <div className="space-y-3">
-            {/* Quantity Progress */}
             <div>
               <div className="mb-1 flex justify-between text-xs">
                 <span className="text-muted-foreground">الكمية المطلوبة</span>
@@ -149,13 +142,12 @@ export function DetailedDealCard({ deal, onJoin, onViewDetails, index = 0 }: Det
               />
             </div>
 
-            {/* Participants Progress */}
             <div>
               <div className="mb-1 flex justify-between text-xs">
                 <span className="text-muted-foreground">المصانع المشاركة</span>
                 <span className={cn(
                   "font-medium font-numbers flex items-center gap-1",
-                  isTargetMet && "text-emerald-600"
+                  isTargetMet && "text-foreground"
                 )}>
                   {isTargetMet ? (
                     <>
@@ -179,26 +171,24 @@ export function DetailedDealCard({ deal, onJoin, onViewDetails, index = 0 }: Det
             </div>
           </div>
 
-          {/* Price Comparison */}
-          <div className="flex items-center justify-between rounded-lg bg-gradient-to-l from-emerald-50 to-transparent p-3 border border-emerald-100">
+          <div className="flex items-center justify-between rounded-lg bg-gradient-to-l from-muted to-transparent p-3 border border-border">
             <div>
               <p className="text-xs text-muted-foreground">سعر السوق</p>
               <p className="font-medium line-through text-muted-foreground font-numbers">
                 {formatCurrency(financials.marketPrice)}
               </p>
             </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100">
-              <ArrowLeft className="h-4 w-4 text-emerald-600" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+              <ArrowLeft className="h-4 w-4 text-foreground" />
             </div>
             <div className="text-left">
               <p className="text-xs text-muted-foreground">السعر المستهدف</p>
-              <p className="text-lg font-bold text-emerald-600 font-numbers">
+              <p className="text-lg font-bold text-foreground font-numbers">
                 {formatCurrency(financials.targetPrice)}
               </p>
             </div>
           </div>
 
-          {/* Action Button */}
           <Button
             className="w-full"
             variant={canJoin ? 'default' : 'outline'}
@@ -208,7 +198,6 @@ export function DetailedDealCard({ deal, onJoin, onViewDetails, index = 0 }: Det
             <ArrowLeft className="mr-2 h-4 w-4" />
           </Button>
 
-          {/* Footer */}
           <div className="flex items-center justify-between border-t pt-3">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
