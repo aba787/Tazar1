@@ -27,12 +27,17 @@ function LoginForm() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
 
-    const result = await sendOtp(email);
+    try {
+      const result = await sendOtp(email);
 
-    if (result.success) {
-      router.push(`/verify-otp?email=${encodeURIComponent(email)}&redirect=${encodeURIComponent(redirect)}`);
-    } else {
-      setFormError(result.error || 'حدث خطأ غير متوقع');
+      if (result.success) {
+        router.push(`/verify-otp?email=${encodeURIComponent(email)}&redirect=${encodeURIComponent(redirect)}`);
+      } else {
+        setFormError(result.error || 'حدث خطأ غير متوقع');
+        setIsLoading(false);
+      }
+    } catch {
+      setFormError('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى');
       setIsLoading(false);
     }
   }

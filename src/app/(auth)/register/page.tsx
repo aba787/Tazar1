@@ -23,12 +23,17 @@ export default function RegisterPage() {
     const fullName = formData.get('fullName') as string;
     const phone = formData.get('phone') as string;
 
-    const result = await signUpWithOtp(email, fullName, phone);
+    try {
+      const result = await signUpWithOtp(email, fullName, phone);
 
-    if (result.success) {
-      router.push(`/verify-otp?email=${encodeURIComponent(email)}&fullName=${encodeURIComponent(fullName)}&phone=${encodeURIComponent(phone)}`);
-    } else {
-      setFormError(result.error || 'حدث خطأ غير متوقع');
+      if (result.success) {
+        router.push(`/verify-otp?email=${encodeURIComponent(email)}&fullName=${encodeURIComponent(fullName)}&phone=${encodeURIComponent(phone)}`);
+      } else {
+        setFormError(result.error || 'حدث خطأ غير متوقع');
+        setIsLoading(false);
+      }
+    } catch {
+      setFormError('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى');
       setIsLoading(false);
     }
   }

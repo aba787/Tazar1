@@ -80,13 +80,20 @@ function VerifyOtpForm() {
     setIsLoading(true);
     setFormError(null);
 
-    const result = await verifyOtp(email, code);
+    try {
+      const result = await verifyOtp(email, code);
 
-    if (result.success) {
-      router.push(result.isAdmin ? '/admin' : redirect);
-      router.refresh();
-    } else {
-      setFormError(result.error || 'الكود غير صحيح');
+      if (result.success) {
+        router.push(result.isAdmin ? '/admin' : redirect);
+        router.refresh();
+      } else {
+        setFormError(result.error || 'الكود غير صحيح');
+        setIsLoading(false);
+        setOtp(['', '', '', '', '', '']);
+        inputRefs.current[0]?.focus();
+      }
+    } catch {
+      setFormError('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى');
       setIsLoading(false);
       setOtp(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
@@ -98,17 +105,22 @@ function VerifyOtpForm() {
     setIsResending(true);
     setFormError(null);
 
-    const metadata = fullName && phone ? { fullName, phone } : undefined;
-    const result = await sendOtp(email, metadata);
+    try {
+      const metadata = fullName && phone ? { fullName, phone } : undefined;
+      const result = await sendOtp(email, metadata);
 
-    if (result.success) {
-      setResendCooldown(60);
-      setOtp(['', '', '', '', '', '']);
-      inputRefs.current[0]?.focus();
-    } else {
-      setFormError(result.error || 'حدث خطأ أثناء إعادة الإرسال');
+      if (result.success) {
+        setResendCooldown(60);
+        setOtp(['', '', '', '', '', '']);
+        inputRefs.current[0]?.focus();
+      } else {
+        setFormError(result.error || 'حدث خطأ أثناء إعادة الإرسال');
+      }
+    } catch {
+      setFormError('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى');
+    } finally {
+      setIsResending(false);
     }
-    setIsResending(false);
   };
 
   useEffect(() => {

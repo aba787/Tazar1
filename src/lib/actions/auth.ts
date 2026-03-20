@@ -56,6 +56,7 @@ export async function sendOtp(email: string, metadata?: { fullName?: string; pho
   const { error } = await supabase.auth.signInWithOtp(otpOptions);
 
   if (error) {
+    console.error('[sendOtp] Supabase error:', error.message, error.status);
     return { success: false, error: 'حدث خطأ أثناء إرسال الكود. يرجى المحاولة مرة أخرى' };
   }
 
@@ -131,6 +132,7 @@ export async function verifyOtp(email: string, token: string): Promise<AuthResul
   });
 
   if (error) {
+    console.error('[verifyOtp] Supabase error:', error.message, error.status);
     if (error.message.includes('expired')) {
       return { success: false, error: 'انتهت صلاحية الكود. يرجى طلب كود جديد' };
     }
